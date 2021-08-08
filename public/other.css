@@ -3,7 +3,10 @@
     height: 54px;
     margin-bottom: 12px;
     background-color: rgb(0, 26, 113);
-
+}
+body{
+    margin: 0;
+    padding: 0;
 }
 .headerIMG{
     width: 100%;
@@ -19,10 +22,8 @@
     filter: contrast(0%) brightness(200%);
 
 }
-#MapContainer{
-    width: 100vw;
-    height: 100vw;
-    max-width: 768px;
-    max-height: 768px;
-    background-color: red;
+#MapFrame{
+    display: flex;
+    justify-content: center;
+    margin: auto;
 }

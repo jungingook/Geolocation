@@ -6,25 +6,29 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var MapObjcet = function (_React$Component) {
-  _inherits(MapObjcet, _React$Component);
+var MyPosition = function (_React$Component) {
+  _inherits(MyPosition, _React$Component);
 
-  function MapObjcet() {
-    _classCallCheck(this, MapObjcet);
+  function MyPosition() {
+    _classCallCheck(this, MyPosition);
 
-    return _possibleConstructorReturn(this, (MapObjcet.__proto__ || Object.getPrototypeOf(MapObjcet)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (MyPosition.__proto__ || Object.getPrototypeOf(MyPosition)).apply(this, arguments));
   }
 
-  _createClass(MapObjcet, [{
-    key: "render",
+  _createClass(MyPosition, [{
+    key: 'render',
     value: function render() {
-      return React.createElement(
-        "h2",
-        null,
-        "I am a Car!"
-      );
+
+      var myLot = Math.round(this.props.lot * 100);
+      var myLat = Math.round(this.props.lat * 100);
+      var Position = {
+        left: myLot + '%',
+        top: myLat + '%'
+      };
+
+      return React.createElement('div', { style: Position, id: 'MyPosition' });
     }
   }]);
 
-  return MapObjcet;
+  return MyPosition;
 }(React.Component);

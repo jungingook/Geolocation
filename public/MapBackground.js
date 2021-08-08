@@ -6,25 +6,31 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var MapObjcet = function (_React$Component) {
-  _inherits(MapObjcet, _React$Component);
+var MapBackground = function (_React$Component) {
+    _inherits(MapBackground, _React$Component);
 
-  function MapObjcet() {
-    _classCallCheck(this, MapObjcet);
+    function MapBackground(props) {
+        _classCallCheck(this, MapBackground);
 
-    return _possibleConstructorReturn(this, (MapObjcet.__proto__ || Object.getPrototypeOf(MapObjcet)).apply(this, arguments));
-  }
+        var _this = _possibleConstructorReturn(this, (MapBackground.__proto__ || Object.getPrototypeOf(MapBackground)).call(this, props));
 
-  _createClass(MapObjcet, [{
-    key: "render",
-    value: function render() {
-      return React.createElement(
-        "h2",
-        null,
-        "I am a Car!"
-      );
+        _this.state = {
+            lat: null,
+            lot: null
+        };
+        return _this;
     }
-  }]);
 
-  return MapObjcet;
+    _createClass(MapBackground, [{
+        key: "render",
+        value: function render() {
+            return React.createElement(
+                "div",
+                { id: "MapBackground" },
+                React.createElement("div", { id: "tempBack", className: this.props.style == 'painting' ? 'map2' : 'map1' })
+            );
+        }
+    }]);
+
+    return MapBackground;
 }(React.Component);

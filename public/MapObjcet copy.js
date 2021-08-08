@@ -18,11 +18,7 @@ var MapObjcet = function (_React$Component) {
   _createClass(MapObjcet, [{
     key: "render",
     value: function render() {
-      return React.createElement(
-        "h2",
-        null,
-        "I am a Car!"
-      );
+      return React.createElement(MapBackground, null);
     }
   }]);
 
