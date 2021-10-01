@@ -29,12 +29,6 @@ class MapTest extends React.Component {
 
     render() {
       this.nearNode()
-      console.log(node)
-
-      console.log(this.props.state.lot)
-      console.log(this.props.state.lat)
-
-      
 
       return (
       <div id="testPanel" >

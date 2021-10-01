@@ -21,10 +21,15 @@ class MapNode extends React.Component {
         }
     }
 
+  
+
     guideLine = ( ) =>{
+        // console.log(num,'테스트중입니다')
         let points = this.props.route.map((num)=>{return(Math.floor(((node[num].lot-this.props.MapContainer.start.lot)/this.props.MapContainer.map.lot*-1)*1000)+","+Math.floor(((node[num].lat-this.props.MapContainer.start.lat)/this.props.MapContainer.map.lat*-1)*1000)+" ")})
-        console.log(points.concat())
-        
+        if(this.props.navigationMode=='myLocation'){
+            points.push(Math.floor(this.props.lot*1000)+","+Math.floor(this.props.lat*1000)+" ")
+        }
+        console.log(points,'테스트중')
         return(  <polyline id="GuideLine"
         points={points} 
         fill="none" stroke="blue" stroke-width="6" />)

@@ -25,7 +25,7 @@ var MapNavigation = function (_React$Component) {
       }
 
       point = list.map(function (node, index) {
-        return React.createElement(PlaceCard, { key: index, node: node, index: index, nodeChange: _this.props.nodeChange });
+        return React.createElement(PlaceCard, { selectNode: _this.props.selectNode, key: index, node: node, index: index, nodeChange: _this.props.nodeChange, targetNodeChange: _this.props.targetNodeChange });
       });
 
       switch (_this.state.nav) {
@@ -149,6 +149,7 @@ var PlaceCard = function (_React$Component2) {
     };
 
     _this2.content = function () {
+
       switch (_this2.state.mode) {
         case 'test':
           return React.createElement(
@@ -250,14 +251,16 @@ var PlaceCard = function (_React$Component2) {
               React.createElement(
                 'h3',
                 { className: 'routerNoti' },
-                ' \uC5B4\uB514\uC11C \uBD80\uD130 \uAE38\uC744 \uCC3E\uC73C\uC2DC\uACA0\uC2B5\uB2C8\uAE4C? '
+                ' \uCD9C\uBC1C\uC9C0\uC810\uC744 \uC120\uD0DD\uD558\uC138\uC694 '
               ),
               React.createElement(
                 'ul',
                 { className: 'routerlist' },
                 React.createElement(
                   'li',
-                  { className: 'routerButton' },
+                  { className: 'routerButton', onClick: function onClick() {
+                      _this2.props.targetNodeChange(_this2.props.node.num, 'myLocation');
+                    } },
                   React.createElement('img', null),
                   React.createElement(
                     'p',
@@ -267,7 +270,9 @@ var PlaceCard = function (_React$Component2) {
                 ),
                 React.createElement(
                   'li',
-                  { className: 'routerButton' },
+                  { className: 'routerButton', onClick: function onClick() {
+                      _this2.props.targetNodeChange(_this2.props.node.num, 'front');
+                    } },
                   React.createElement('img', null),
                   React.createElement(
                     'p',
@@ -277,7 +282,9 @@ var PlaceCard = function (_React$Component2) {
                 ),
                 React.createElement(
                   'li',
-                  { className: 'routerButton' },
+                  { className: 'routerButton', onClick: function onClick() {
+                      _this2.props.targetNodeChange(_this2.props.node.num, 'back');
+                    } },
                   React.createElement('img', null),
                   React.createElement(
                     'p',
@@ -287,7 +294,9 @@ var PlaceCard = function (_React$Component2) {
                 ),
                 React.createElement(
                   'li',
-                  { className: 'routerButton' },
+                  { className: 'routerButton', onClick: function onClick() {
+                      _this2.props.targetNodeChange(_this2.props.node.num, 'station');
+                    } },
                   React.createElement('img', null),
                   React.createElement(
                     'p',
@@ -379,6 +388,11 @@ var PlaceCard = function (_React$Component2) {
   }
 
   _createClass(PlaceCard, [{
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps, prevState) {
+      // console.log('componentDidUpdate');
+    }
+  }, {
     key: 'render',
     value: function render() {
       return this.content();

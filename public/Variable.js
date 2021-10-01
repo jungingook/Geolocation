@@ -53,12 +53,11 @@ var PriorityQueue = function () {
 
 var node = [{
     num: 0,
-    alias: '정문입구',
+    alias: '더미',
     type: 'Entrance',
-    link: [{ vertex: 30, dist: 1 }],
-    lat: 37.607269321326264,
-    lot: 126.93294688160951,
-    summary: '서울혁신파크의 정문'
+    link: [],
+    lat: null,
+    lot: null
 }, {
     num: 1,
     alias: '후문입구',
@@ -101,11 +100,12 @@ var node = [{
     summary: '민노총 건물 옆의 셋길'
 }, {
     num: 6,
-    alias: '추가입구',
+    alias: '정문입구',
     type: 'Entrance',
-    link: [],
-    lat: null,
-    lot: null
+    link: [{ vertex: 30, dist: 1 }],
+    lat: 37.607269321326264,
+    lot: 126.93294688160951,
+    summary: '서울혁신파크의 정문'
 }, {
     num: 7,
     alias: '추가입구',
@@ -315,7 +315,7 @@ var node = [{
     num: 30,
     alias: '정문앞길',
     type: 'Node',
-    link: [{ vertex: 31, dist: 1 }, { vertex: 44, dist: 1 }, { vertex: 28, dist: 1 }, { vertex: 0, dist: 1 }],
+    link: [{ vertex: 31, dist: 1 }, { vertex: 44, dist: 1 }, { vertex: 28, dist: 1 }, { vertex: 6, dist: 1 }],
     lat: 37.60739728573696,
     lot: 126.9331586196691
 }, {

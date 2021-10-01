@@ -18,7 +18,7 @@ class MapNavigation extends React.Component {
       
       point = list.map(
           (node,index) => (
-            <PlaceCard key={index} node={node} index={index} nodeChange={this.props.nodeChange}/> 
+            <PlaceCard selectNode={this.props.selectNode} key={index} node={node} index={index} nodeChange={this.props.nodeChange} targetNodeChange={this.props.targetNodeChange}/> 
           ) 
       );    
 
@@ -78,6 +78,11 @@ class MapNavigation extends React.Component {
       };
     }
 
+    componentDidUpdate(prevProps, prevState) {
+      // console.log('componentDidUpdate');
+    }
+    
+
       select = (num) =>{
         this.props.nodeChange(num)
         this.setState({
@@ -103,6 +108,8 @@ class MapNavigation extends React.Component {
         e.stopPropagation();
       }
       content = () => {
+
+
         switch (this.state.mode) {
           case 'test':
             return(
@@ -146,21 +153,21 @@ class MapNavigation extends React.Component {
                 <div className="PlaceHeaher">
                   <h3 className="PlaceTitle">{this.props.node.alias}</h3>
                 </div>
-                  <h3 className="routerNoti"> 어디서 부터 길을 찾으시겠습니까? </h3>
+                  <h3 className="routerNoti"> 출발지점을 선택하세요 </h3>
                   <ul className="routerlist">
-                    <li className="routerButton">
+                    <li className="routerButton" onClick={()=>{this.props.targetNodeChange(this.props.node.num,'myLocation')}}>
                       <img/>
                       <p>내위치</p>
                     </li>
-                    <li className="routerButton">
+                    <li className="routerButton" onClick={()=>{this.props.targetNodeChange(this.props.node.num,'front')}}>
                       <img/>
                       <p>정문</p>
                     </li>
-                    <li className="routerButton">
+                    <li className="routerButton" onClick={()=>{this.props.targetNodeChange(this.props.node.num,'back')}}>
                       <img/>
                       <p>후문</p>
                     </li>
-                    <li className="routerButton">
+                    <li className="routerButton" onClick={()=>{this.props.targetNodeChange(this.props.node.num,'station')}}>
                       <img/>
                       <p>불광역</p>
                     </li>

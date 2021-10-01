@@ -45,10 +45,6 @@ var MapTest = function (_React$Component) {
       var _this2 = this;
 
       this.nearNode();
-      console.log(node);
-
-      console.log(this.props.state.lot);
-      console.log(this.props.state.lat);
 
       return React.createElement(
         "div",

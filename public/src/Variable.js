@@ -38,13 +38,12 @@ class PriorityQueue {
 const node =[
     {
         num : 0,
-        alias:'정문입구',
+        alias:'더미',
         type : 'Entrance',
-        link:[{vertex:30,dist:1,},],
-        lat:37.607269321326264,
-        lot:126.93294688160951,
-        summary:'서울혁신파크의 정문',
-    },
+        link:[],
+        lat:null,
+        lot:null,
+    } ,
     {
         num : 1,
         alias:'후문입구',
@@ -92,11 +91,12 @@ const node =[
     },
     {
         num : 6,
-        alias:'추가입구',
+        alias:'정문입구',
         type : 'Entrance',
-        link:[],
-        lat:null,
-        lot:null,
+        link:[{vertex:30,dist:1,},],
+        lat:37.607269321326264,
+        lot:126.93294688160951,
+        summary:'서울혁신파크의 정문',
     },
     {
         num : 7,

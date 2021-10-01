@@ -8,13 +8,16 @@ class MapObjcet extends React.Component {
     this.state = { 
       // inPark : false,
       start : 1,
-      end : 0,
+      end : 1,
       route : [],
+      polling : 0,
     };
   }
   
-  dijkstra = (start,end)=>{
 
+  
+  dijkstra = (start,end)=>{
+    console.log('시작',start,end)
     nextNode = (startNode,targetNode) =>{
       // console.log('경로 : ',node[startNode].alias,'-->',node[targetNode.vertex].alias,'갱신여부 : ',distance[targetNode.vertex]>targetNode.dist+distance[startNode])
       if(distance[targetNode.vertex]>targetNode.dist+distance[startNode]){
@@ -25,11 +28,11 @@ class MapObjcet extends React.Component {
     }
     
     findRoute = (targetNode) =>{
+      console.log(targetNode,prev[targetNode],'테스트중')
       if (prev[targetNode]){
         route.push(prev[targetNode])
         findRoute(prev[targetNode])
       }
-
     }
 
     let Queue = new PriorityQueue
@@ -46,7 +49,7 @@ class MapObjcet extends React.Component {
 
     node[target].link.map((node)=>(nextNode(num,node)))
     while(Queue.len()!=0){
-
+   
       let targetNode = Queue.deQueue() 
       target = targetNode.vertex
       num =node[target].num
@@ -60,10 +63,7 @@ class MapObjcet extends React.Component {
 
     // 경로찾기
     route.push(end)
-    console.log(route)
     findRoute(end)
-
-    console.log(route)
     this.setState({
       route,start,end
     })
@@ -81,7 +81,7 @@ class MapObjcet extends React.Component {
 
   mapObjs = (inpark) =>{
     let objs =[<MapBackground style={this.props.mapStyle}/>]
-    objs.push(<MapNode lot={this.props.userLot} lat={this.props.userLat} MapContainer={this.props.MapContainer} nodeChange={this.props.nodeChange} route={this.state.route}/>)
+    objs.push(<MapNode lot={this.props.userLot} lat={this.props.userLat} MapContainer={this.props.MapContainer} nodeChange={this.props.nodeChange} route={this.state.route} navigationMode={this.props.navigationMode}/>)
     if(this.props.selectNode!=null){
       objs.push(<PlaceNoti navigationStart={this.navigationStart} navigationEnd={this.navigationEnd} node={this.props.selectNode} lot={this.props.userLot} lat={this.props.userLat} MapContainer={this.props.MapContainer}/>)
     }
@@ -97,9 +97,53 @@ class MapObjcet extends React.Component {
   navigationEnd = (end) =>{
     this.dijkstra(this.state.start,end)
   }
+  navigationRoute = () =>{
+    switch (this.props.navigationMode) {
+      case 'myLocation':
+        if(this.props.nearNode){
+          this.dijkstra(this.props.nearNode,this.props.targetNode)
+        }
+        break;
+      case 'station':
+        this.dijkstra(2,this.props.targetNode)
+        break;
+      case 'back':
+        this.dijkstra(1,this.props.targetNode)
+        break;
+      case 'front':
+        this.dijkstra(6,this.props.targetNode)
+        break;   
+      default:
+        break;
+    }
+
+  }
+  navigation = (start,end) =>{
+    this.dijkstra(start,end)
+  }
 
   componentDidMount() {
-    // this.dijkstra(33,45)
+    if(this.props.parents != 'view'){
+    // AJAX 통신 마운트
+    // 내부 카운터 마운트
+    let polling = setInterval(this.polling, 1000)
+    this.setState({
+        pollingInterval : polling,
+    },)
+    }
+  }
+
+  componentWillUnmount() {
+      if(this.props.parents != 'view'){
+          // 내부 카운터 언마운트
+          clearInterval(this.state.pollingInterval);
+      }
+  }
+  polling = () =>{
+      this.navigationRoute()
+      // this.setState({
+      //     polling : this.state.polling +1
+      // })
   }
 
 

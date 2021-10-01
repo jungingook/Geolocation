@@ -30,11 +30,14 @@ var MapNode = function (_React$Component) {
         };
 
         _this.guideLine = function () {
+            // console.log(num,'테스트중입니다')
             var points = _this.props.route.map(function (num) {
                 return Math.floor((node[num].lot - _this.props.MapContainer.start.lot) / _this.props.MapContainer.map.lot * -1 * 1000) + "," + Math.floor((node[num].lat - _this.props.MapContainer.start.lat) / _this.props.MapContainer.map.lat * -1 * 1000) + " ";
             });
-            console.log(points.concat());
-
+            if (_this.props.navigationMode == 'myLocation') {
+                points.push(Math.floor(_this.props.lot * 1000) + "," + Math.floor(_this.props.lat * 1000) + " ");
+            }
+            console.log(points, '테스트중');
             return React.createElement('polyline', { id: 'GuideLine',
                 points: points,
                 fill: 'none', stroke: 'blue', 'stroke-width': '6' });

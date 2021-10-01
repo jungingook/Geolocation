@@ -24,6 +24,26 @@ var MapContainer = function (_React$Component) {
       });
     };
 
+    _this.nearNode = function (lat, lot) {
+      var min = Infinity;
+      var num = null;
+
+      var nodeList = node.filter(function (node) {
+        return node.type != "Building";
+      });
+      // let nodeList =node
+      console.log(nodeList, '테스트중');
+      for (var index = 0; index < nodeList.length; index++) {
+        lot = Math.abs(_this.state.lot - nodeList[index].lot);
+        lat = Math.abs(_this.state.lat - nodeList[index].lat);
+        if (min > lot + lat) {
+          min = lot + lat;
+          num = nodeList[index].num;
+        }
+      }
+      return num;
+    };
+
     _this.dragimg = function (e) {
       var img = document.createElement("img");
       img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
@@ -38,12 +58,22 @@ var MapContainer = function (_React$Component) {
       });
     };
 
+    _this.targetNodeChange = function () {
+      var num = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      var mode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
+      _this.setState({
+        targetNode: num,
+        navigationMode: mode
+      });
+    };
+
     _this.mapDrag = function (e) {
       try {
         if (e.pageX != 0 && e.pageY != 0) {
           var moveX = e.clientX - _this.state.mapDragStart.clientX;
           var moveY = e.clientY - _this.state.mapDragStart.clientY;
-          console.log('move', moveX, moveY);
+          console.log('move?', moveX, moveY);
           _this.setState({
             tempPositionX: moveX,
             tempPositionY: moveY
@@ -85,7 +115,10 @@ var MapContainer = function (_React$Component) {
       tempPositionX: 0,
       tempPositionY: 0,
       mapStyle: 'normal',
-      selectNode: null
+      selectNode: null,
+      nearNode: null,
+      targetNode: null,
+      navigationMode: null
     };
     return _this;
   }
@@ -101,7 +134,8 @@ var MapContainer = function (_React$Component) {
       var _this2 = this;
 
       navigator.geolocation.getCurrentPosition(function (position) {
-        // console.log(position)
+        var _this2$setState;
+
         var _position$coords = position.coords,
             accuracy = _position$coords.accuracy,
             latitude = _position$coords.latitude,
@@ -110,21 +144,21 @@ var MapContainer = function (_React$Component) {
             altitudeAccuracy = _position$coords.altitudeAccuracy,
             heading = _position$coords.heading;
 
+        var nearNode = _this2.nearNode(latitude, longitude);
 
-        _this2.setState(_defineProperty({
+        _this2.setState((_this2$setState = {
           lat: latitude,
           lot: longitude,
           acc: accuracy,
           heading: heading,
           alt: altitude,
           altAcc: altitudeAccuracy
-        }, 'lot', longitude));
+        }, _defineProperty(_this2$setState, 'lot', longitude), _defineProperty(_this2$setState, 'nearNode', nearNode), _this2$setState));
         // Show a map centered at latitude / longitude.
       }, function (error) {}, { enableHighAccuracy: true });
 
       var userLat = (this.state.lat - this.props.MapContainer.start.lat) / this.props.MapContainer.map.lat * -1;
       var userLot = (this.state.lot - this.props.MapContainer.start.lot) / this.props.MapContainer.map.lot * -1;
-      console.log(this.state.mapPositionY + this.state.tempPositionY, '값');
       return React.createElement(
         'div',
         { id: 'MapContainer' },
@@ -156,7 +190,10 @@ var MapContainer = function (_React$Component) {
             container: this.container.current,
             mapStyle: this.state.mapStyle,
             nodeChange: this.nodeChange,
-            selectNode: this.state.selectNode })
+            nearNode: this.state.nearNode,
+            targetNode: this.state.targetNode,
+            selectNode: this.state.selectNode,
+            navigationMode: this.state.navigationMode })
         ),
         React.createElement(
           'div',
@@ -166,7 +203,9 @@ var MapContainer = function (_React$Component) {
             userLat: userLat,
             userLot: userLot,
             nodeChange: this.nodeChange,
-            mapChange: this.mapChange
+            targetNodeChange: this.targetNodeChange,
+            mapChange: this.mapChange,
+            selectNode: this.state.selectNode
           })
         )
       );

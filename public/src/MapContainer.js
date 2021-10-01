@@ -15,8 +15,12 @@ class MapContainer extends React.Component {
       tempPositionY : 0,
       mapStyle : 'normal',
       selectNode : null,
+      nearNode : null,
+      targetNode : null,
+      navigationMode : null,
     };
   }
+
 
 
   componentDidMount() {
@@ -29,6 +33,26 @@ class MapContainer extends React.Component {
       mapStyle : value,
     })
   }
+ 
+
+  nearNode = (lat,lot)=>{
+    let min = Infinity
+    let num = null
+
+    let nodeList = node.filter( node =>(node.type!="Building"));
+    // let nodeList =node
+    console.log(nodeList,'테스트중')
+    for (let index = 0; index < nodeList.length; index++) {
+      lot = Math.abs(this.state.lot - nodeList[index].lot)
+      lat = Math.abs(this.state.lat - nodeList[index].lat)
+      if (min > lot+lat){
+        min = lot+lat
+        num = nodeList[index].num
+      }
+    }    
+    return(num)
+  }
+
 
   dragimg = (e) => {
     let img = document.createElement("img");
@@ -41,13 +65,20 @@ class MapContainer extends React.Component {
       selectNode : num,
     })
   }
+  targetNodeChange = (num=null,mode=null) =>{
+    this.setState({
+      targetNode : num,
+      navigationMode : mode,
+    })
+  }
+
 
   mapDrag = (e) =>{
     try {
       if(e.pageX!=0 && e.pageY!=0){
       let moveX = e.clientX - this.state.mapDragStart.clientX 
       let moveY = e.clientY - this.state.mapDragStart.clientY
-      console.log('move',moveX,moveY)
+      console.log('move?',moveX,moveY)
       this.setState({
         tempPositionX : moveX,
         tempPositionY : moveY,
@@ -86,9 +117,8 @@ class MapContainer extends React.Component {
 
   render() {
     navigator.geolocation.getCurrentPosition(position => {
-      // console.log(position)
       const { accuracy, latitude, longitude, altitude, altitudeAccuracy, heading } = position.coords;
-
+      let nearNode = this.nearNode(latitude,longitude)
   
       this.setState({
         lat : latitude,
@@ -98,35 +128,17 @@ class MapContainer extends React.Component {
         alt : altitude,
         altAcc:altitudeAccuracy,
         lot : longitude,
+        nearNode : nearNode
       })
       // Show a map centered at latitude / longitude.
     },error => {
       
     },{enableHighAccuracy:true});
-
-
+  
     let userLat = (this.state.lat-this.props.MapContainer.start.lat)/this.props.MapContainer.map.lat*-1
     let userLot = (this.state.lot-this.props.MapContainer.start.lot)/this.props.MapContainer.map.lot*-1
-    console.log(this.state.mapPositionY+this.state.tempPositionY,'값')
     return (
          <div id="MapContainer" >
-          {/* 맵입니다. 테스트중입니다 13
-          top : {this.state.mapPositionY} + {this.state.tempPositionY} = {this.state.mapPositionY+this.state.tempPositionY} left : {this.state.mapPositionX} + {this.state.tempPositionX} = {this.state.mapPositionX+this.state.tempPositionX}
-          <p> 
-          my latitude : {userLat}
-          </p>
-          <p> 
-          my longitude : {userLot}
-          </p>
-          <p> 
-          map latitude : {this.props.MapContainer.map.lat}
-          </p>
-          <p> 
-          map longitude : {this.props.MapContainer.map.lot}
-          </p> */}
-
-         
-          {/* <MapTest key={'MapTest'} state={this.state} userLat={userLat} userLot={userLot} mapChange={this.mapChange}/> */}
           <div id="MapMain"
             tabIndex={0} draggable="true" 
             ref={this.container}
@@ -145,7 +157,10 @@ class MapContainer extends React.Component {
               container={this.container.current} 
               mapStyle={this.state.mapStyle}
               nodeChange={this.nodeChange}
-              selectNode={this.state.selectNode}/>
+              nearNode={this.state.nearNode}
+              targetNode={this.state.targetNode}
+              selectNode={this.state.selectNode}
+              navigationMode={this.state.navigationMode}/>
           </div>
           <div id="MapSide">
             <MapNavigation
@@ -153,7 +168,9 @@ class MapContainer extends React.Component {
               userLat={userLat}
               userLot={userLot}
               nodeChange={this.nodeChange}
+              targetNodeChange={this.targetNodeChange}
               mapChange={this.mapChange}
+              selectNode={this.state.selectNode}
             />
           </div>
         </div>
