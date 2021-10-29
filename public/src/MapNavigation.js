@@ -1,4 +1,5 @@
 
+
 class MapNavigation extends React.Component {
   constructor(props) {
     super(props);
@@ -38,13 +39,14 @@ class MapNavigation extends React.Component {
                 <div id="mapPointList">
                   {point}
                 </div>
-         
+              {/*          
               <div className="mapPoint" onClick={()=>this.setState({nav : 'test'})}>
                 <div className="pointInfo">
                   <h3>테스트모드1</h3>
                   <p>테스트 모드로 진입합니다.</p>
                 </div>
-              </div>
+              </div> 
+              */}
 
               </div>
             </div>
@@ -85,9 +87,9 @@ class MapNavigation extends React.Component {
 
       select = (num) =>{
         this.props.nodeChange(num)
-        this.setState({
-          mode : 'more',
-        })
+        // this.setState({
+        //   mode : 'more',
+        // })
       }
       unselect = () =>{
         this.props.nodeChange(null)
@@ -115,7 +117,7 @@ class MapNavigation extends React.Component {
             return(
             <div div className="mapPoint mapTransition" onClick={()=>this.props.nodeChange(this.props.node.num)}>
               <img src={this.props.node.img}/>
-              <div className="pointInfo">
+              <div className="poinㄴtInfo">
                 <div className="pointheader">
                   <h3>{this.props.node.alias}</h3>
                   <span>
@@ -139,9 +141,9 @@ class MapNavigation extends React.Component {
                 {/* <p className="PlaceSummary"> {this.props.node.summary}</p> */}
               </div>
               <div className="PlaceButton">
-                
+                <button className="router" onClick={()=>this.setState({mode:'more'})}><p>건물안내</p></button>
                 <button className="more" onClick={(e)=>this.route(e)}><p>길찾기</p></button>
-                {/* <button className="router" onClick={()=>this.setState({mode:'more'})}><p>더보기</p></button> */}
+          
               </div>
             </div>
             )
@@ -156,26 +158,26 @@ class MapNavigation extends React.Component {
                   <h3 className="routerNoti"> 출발지점을 선택하세요 </h3>
                   <ul className="routerlist">
                     <li className="routerButton" onClick={()=>{this.props.targetNodeChange(this.props.node.num,'myLocation')}}>
-                      <img/>
+                      <img className="routerImgMe"/>
                       <p>내위치</p>
                     </li>
                     <li className="routerButton" onClick={()=>{this.props.targetNodeChange(this.props.node.num,'front')}}>
-                      <img/>
+                      <img className="routerImgFront"/>
                       <p>정문</p>
                     </li>
                     <li className="routerButton" onClick={()=>{this.props.targetNodeChange(this.props.node.num,'back')}}>
-                      <img/>
+                      <img className="routerImgBack"/>
                       <p>후문</p>
                     </li>
                     <li className="routerButton" onClick={()=>{this.props.targetNodeChange(this.props.node.num,'station')}}>
-                      <img/>
+                      <img className="routerImgSubway"/>
                       <p>불광역</p>
                     </li>
                   </ul>
             
               </div>
               <div className="PlaceButton">
-                
+              <button className="router" onClick={()=>this.setState({mode:'more'})}><p>건물안내</p></button>
               <button className="more" onClick={(e)=>this.back(e)}><p>뒤로</p></button>
                 {/* <button className="router" onClick={()=>this.setState({mode:'more'})}><p>더보기</p></button> */}
               </div>
@@ -200,6 +202,7 @@ class MapNavigation extends React.Component {
                 </div>
               </div>
               <div className="PlaceButton">
+              <button className="more" onClick={(e)=>this.back(e)}><p>뒤로</p></button>
               <button className="more" onClick={(e)=>this.route(e)}><p>길찾기</p></button>
                 {/* <button className="router" onClick={()=>this.setState({mode:'test'})}><p>뒤로</p></button> */}
               </div>

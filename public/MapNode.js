@@ -30,14 +30,12 @@ var MapNode = function (_React$Component) {
         };
 
         _this.guideLine = function () {
-            // console.log(num,'테스트중입니다')
             var points = _this.props.route.map(function (num) {
                 return Math.floor((node[num].lot - _this.props.MapContainer.start.lot) / _this.props.MapContainer.map.lot * -1 * 1000) + "," + Math.floor((node[num].lat - _this.props.MapContainer.start.lat) / _this.props.MapContainer.map.lat * -1 * 1000) + " ";
             });
             if (_this.props.navigationMode == 'myLocation') {
                 points.push(Math.floor(_this.props.lot * 1000) + "," + Math.floor(_this.props.lat * 1000) + " ");
             }
-            console.log(points, '테스트중');
             return React.createElement('polyline', { id: 'GuideLine',
                 points: points,
                 fill: 'none', stroke: 'blue', 'stroke-width': '6' });
@@ -62,7 +60,9 @@ var MapNode = function (_React$Component) {
             list = node.filter(function (node) {
                 return node.lat && node.lot;
             });
-            // list = list.filter( node =>(node.type=="Building"));
+            list = list.filter(function (node) {
+                return node.type == "Building";
+            });
             mapNode = list.map(function (node, index) {
                 return React.createElement(
                     'g',
@@ -123,8 +123,6 @@ var PlaceNoti = function (_React$Component2) {
     _createClass(PlaceNoti, [{
         key: 'render',
         value: function render() {
-            var _this4 = this;
-
             var linkNode = node[this.props.node].link.map(function (link) {
                 return node[link.vertex].alias + '(' + link.vertex + '), ';
             });
@@ -136,31 +134,14 @@ var PlaceNoti = function (_React$Component2) {
                 React.createElement('img', { src: node[this.props.node].img }),
                 React.createElement(
                     'div',
-                    null,
+                    { id: 'PlaceNotiInfo' },
                     React.createElement(
                         'h3',
                         null,
                         React.createElement(
                             'span',
                             null,
-                            node[this.props.node].alias,
-                            '(',
-                            node[this.props.node].num,
-                            ')'
-                        ),
-                        React.createElement(
-                            'button',
-                            { onClick: function onClick() {
-                                    return _this4.props.navigationStart(node[_this4.props.node].num);
-                                } },
-                            '\uCD9C\uBC1C'
-                        ),
-                        React.createElement(
-                            'button',
-                            { onClick: function onClick() {
-                                    return _this4.props.navigationEnd(node[_this4.props.node].num);
-                                } },
-                            '\uB3C4\uCC29'
+                            node[this.props.node].alias
                         )
                     ),
                     React.createElement(

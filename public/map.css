@@ -189,6 +189,31 @@
     padding: 0px;
 }
 
+.RouteCard .routerButton .routerImgMe{ 
+    background-image:  url('src/me.svg');
+    background-size: 70% 70%;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+.RouteCard .routerButton .routerImgFront{ 
+    background-image:  url('src/Front.svg');
+    background-size: 70% 70%;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+.RouteCard .routerButton .routerImgBack{ 
+    background-image:  url('src/back.svg');
+    background-size: 70% 70%;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+.RouteCard .routerButton .routerImgSubway{ 
+    background-image:  url('src/subway.svg');
+    background-size: 70% 70%;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
 @media screen and (min-width: 1200px) { 
     #MapContainer{
         width: 100vw;
@@ -332,10 +357,10 @@
     }
     .PlaceButton button{
         margin-left: 10px;
-        width: 50px;
+        width: auto;
         height: 30px;
         border: 0px;
-        padding: 0px;
+        padding: 0px 10px;
         border-radius: 5px;
         background-color: white;
         box-shadow: 0 35px 25px rgba(0, 0, 0, 0.05), 0 5px 5px rgba(0, 0, 0, 0.3);
@@ -353,7 +378,7 @@
     }
     .PlaceButton button p{
         font-family: 'S-CoreDream-6Bold';
-        width: 50px;
+        width: auto;
         height: 30px;
         line-height: 30px;
         text-align: center;
@@ -430,6 +455,7 @@
         transition: transform 0.2s;
     }
     .RouteCard .routerButton img{ 
+        border: none;
         background-color: white;
         width: 50px;
         height: 50px;
@@ -437,6 +463,7 @@
         border-radius: 5px;
         box-shadow: 0 35px 25px rgba(0, 0, 0, 0.05), 0 5px 5px rgba(0, 0, 0, 0.3);
     }
+
     .RouteCard .routerButton p{ 
         font-family: 'S-CoreDream-4Regular';
         border: 0px;
@@ -613,7 +640,7 @@
 
     .PlaceTitle{
         background-color:  rgb(0, 26, 113);
-        width: 200px;
+        width: 170px;
         text-align: center;
         border-radius: 0px 5px 0px 5px;
         font-family: 'S-CoreDream-4Regular';
@@ -656,8 +683,10 @@
         font-family: 'S-CoreDream-6Bold';
         width: 50px;
         height: 30px;
+
         line-height: 30px;
         text-align: center;
+        font-size: 12px;
         margin: 0px;
         padding: 0px;
     }
@@ -706,7 +735,7 @@
 
     .RouteCard .PlaceTitle{
         background-color:  rgb(0, 26, 113);
-        width: 200px;
+        width: 170px;
         text-align: center;
         border-radius: 5px 0px 5px 0px;
         font-family: 'S-CoreDream-4Regular';
@@ -792,7 +821,7 @@
 
     .MoreCard .PlaceTitle{
         background-color:  rgb(0, 26, 113);
-        width: 200px;
+        width: 170px;
         text-align: center;
         border-radius: 5px 0px 5px 0px;
         font-family: 'S-CoreDream-4Regular';
@@ -896,29 +925,39 @@
     position: absolute;
     box-shadow: 0 10px 35px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.1);
     /* display: flex; */
-    background-color: white;   
+    background-color: rgb(0, 26, 113);
     transform: translate(-150px, -210px);
+}
+#PlaceNotiInfo{
+    height: 50px;
+
 }
 #PlaceNoti img{
     width: 300px;
-    height: 125px;
+    height: 150px;
     object-fit: cover;
+    display: flex;
 }
 #PlaceNoti h3{
-    height: 20px;
+    /* display: flex; */
+    line-height: 50px;
+    font-size: 25px;
+    height: 50px;
     margin: 0;
-    font-family: 'S-CoreDream-6Bold';
-    object-fit: cover;
+    text-align: center;
+    font-family: 'S-CoreDream-4Regular';
+    color: white;
+    color: white;
 }
-#PlaceNoti p{
+/* #PlaceNoti p{
     padding-top: 10px;
     height: 40px;
     font-family: 'S-CoreDream-4Regular';
-    /* line-height: 25px; */
+
     margin: 0;
     object-fit: cover;
     word-break: keep-all;
-}
+} */
 .node{
     width: 20px;
     height: 20px;

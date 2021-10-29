@@ -74,10 +74,11 @@ class MapContainer extends React.Component {
 
 
   mapDrag = (e) =>{
+    console.log('mapDrag?',e.clientX,e.clientY)
     try {
       if(e.pageX!=0 && e.pageY!=0){
-      let moveX = e.clientX - this.state.mapDragStart.clientX 
-      let moveY = e.clientY - this.state.mapDragStart.clientY
+      let moveX = e.pageX - this.state.mapDragStart.pageX 
+      let moveY = e.pageY - this.state.mapDragStart.pageY
       console.log('move?',moveX,moveY)
       this.setState({
         tempPositionX : moveX,
@@ -99,13 +100,11 @@ class MapContainer extends React.Component {
   }
   mapDragEnd = (e) =>{
     try {
-      let moveX = e.clientX - this.state.mapDragStart.clientX 
-      let moveY = e.clientY - this.state.mapDragStart.clientY
       this.setState({
         tempPositionY : 0,
         tempPositionX : 0,
-        mapPositionX : this.state.mapPositionX+moveX,
-        mapPositionY : this.state.mapPositionY+moveY,
+        mapPositionX : this.state.mapPositionX+this.state.tempPositionX,
+        mapPositionY : this.state.mapPositionY+this.state.tempPositionY,
 
       })
 
@@ -143,7 +142,7 @@ class MapContainer extends React.Component {
             tabIndex={0} draggable="true" 
             ref={this.container}
             onClick={(e)=>console.log(this.nodeChange(null))} 
-            onDrag={(e)=>this.mapDrag(e)} 
+            onDragOver={(e)=>this.mapDrag(e)} 
             onDragStart={(e) => this.mapDragStart(e)} 
             onDragEnd={(e) => this.mapDragEnd(e)} 
           >

@@ -21,15 +21,11 @@ class MapNode extends React.Component {
         }
     }
 
-  
-
     guideLine = ( ) =>{
-        // console.log(num,'테스트중입니다')
         let points = this.props.route.map((num)=>{return(Math.floor(((node[num].lot-this.props.MapContainer.start.lot)/this.props.MapContainer.map.lot*-1)*1000)+","+Math.floor(((node[num].lat-this.props.MapContainer.start.lat)/this.props.MapContainer.map.lat*-1)*1000)+" ")})
         if(this.props.navigationMode=='myLocation'){
             points.push(Math.floor(this.props.lot*1000)+","+Math.floor(this.props.lat*1000)+" ")
         }
-        console.log(points,'테스트중')
         return(  <polyline id="GuideLine"
         points={points} 
         fill="none" stroke="blue" stroke-width="6" />)
@@ -41,7 +37,7 @@ class MapNode extends React.Component {
     
     render() {
         list = node.filter( node =>(node.lat&&node.lot));
-        // list = list.filter( node =>(node.type=="Building"));
+        list = list.filter( node =>(node.type=="Building"));
         mapNode = list.map(
             (node,index) => (
                 <g>
@@ -103,18 +99,18 @@ class MapNode extends React.Component {
             return (
                 <div id="PlaceNoti" style={{top:top+'%',left:left+'%'}}>
                     <img src={node[this.props.node].img}/>
-                    <div>
+                    <div id="PlaceNotiInfo" >
                         <h3> 
                             <span>
                             {node[this.props.node].alias}
-                            ({node[this.props.node].num})
+                            {/* ({node[this.props.node].num}) */}
                             </span>
-                            <button onClick={()=>this.props.navigationStart(node[this.props.node].num)}>
+                            {/* <button onClick={()=>this.props.navigationStart(node[this.props.node].num)}>
                                 출발
                             </button>
                             <button onClick={()=>this.props.navigationEnd(node[this.props.node].num)}>
                                 도착
-                            </button>
+                            </button> */}
                         </h3>
                         {/* <p>
                             {node[this.props.node].summary}

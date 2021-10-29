@@ -69,10 +69,11 @@ var MapContainer = function (_React$Component) {
     };
 
     _this.mapDrag = function (e) {
+      console.log('mapDrag?', e.clientX, e.clientY);
       try {
         if (e.pageX != 0 && e.pageY != 0) {
-          var moveX = e.clientX - _this.state.mapDragStart.clientX;
-          var moveY = e.clientY - _this.state.mapDragStart.clientY;
+          var moveX = e.pageX - _this.state.mapDragStart.pageX;
+          var moveY = e.pageY - _this.state.mapDragStart.pageY;
           console.log('move?', moveX, moveY);
           _this.setState({
             tempPositionX: moveX,
@@ -93,13 +94,11 @@ var MapContainer = function (_React$Component) {
 
     _this.mapDragEnd = function (e) {
       try {
-        var moveX = e.clientX - _this.state.mapDragStart.clientX;
-        var moveY = e.clientY - _this.state.mapDragStart.clientY;
         _this.setState({
           tempPositionY: 0,
           tempPositionX: 0,
-          mapPositionX: _this.state.mapPositionX + moveX,
-          mapPositionY: _this.state.mapPositionY + moveY
+          mapPositionX: _this.state.mapPositionX + _this.state.tempPositionX,
+          mapPositionY: _this.state.mapPositionY + _this.state.tempPositionY
 
         });
       } catch (error) {}
@@ -170,7 +169,7 @@ var MapContainer = function (_React$Component) {
             onClick: function onClick(e) {
               return console.log(_this2.nodeChange(null));
             },
-            onDrag: function onDrag(e) {
+            onDragOver: function onDragOver(e) {
               return _this2.mapDrag(e);
             },
             onDragStart: function onDragStart(e) {
