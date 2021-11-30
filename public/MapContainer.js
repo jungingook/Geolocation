@@ -32,7 +32,7 @@ var MapContainer = function (_React$Component) {
         return node.type != "Building";
       });
       // let nodeList =node
-      console.log(nodeList, '테스트중');
+      //console.log(nodeList,'테스트중')
       for (var index = 0; index < nodeList.length; index++) {
         lot = Math.abs(_this.state.lot - nodeList[index].lot);
         lat = Math.abs(_this.state.lat - nodeList[index].lat);
@@ -53,9 +53,17 @@ var MapContainer = function (_React$Component) {
     _this.nodeChange = function () {
       var num = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
-      _this.setState({
-        selectNode: num
-      });
+
+      if (num) {
+        _this.setState({
+          selectNode: num
+        });
+      } else {
+        _this.setState({
+          selectNode: null,
+          containerMode: 'map'
+        });
+      }
     };
 
     _this.targetNodeChange = function () {
@@ -68,17 +76,64 @@ var MapContainer = function (_React$Component) {
       });
     };
 
+    _this.onTouchStart = function (e) {
+
+      //console.log('onTouchStart',e.touches[0].pageX,e.touches[0].pageY,this.state.mapPositionX,this.state.mapPositionY)
+      if (e.touches.length == 1) {
+        _this.setState({
+          mapTouchStart: e.touches[0]
+        });
+        //e.preventDefault()
+      }
+      // alert('테스트')
+    };
+
+    _this.onTouch = function (e) {
+
+      // console.log('onTouch',e.touches[0].pageX - this.state.mapDragStart.pageX,e.touches[0].pageY - this.state.mapDragStart.pageY)
+      // console.log('onTouch',e.touches[0].pageX,e.touches[0].pageY)
+      if (e.touches.length == 1) {
+        try {
+          if (e.pageX != 0 && e.pageY != 0) {
+            var moveX = e.touches[0].pageX - _this.state.mapTouchStart.pageX;
+            var moveY = e.touches[0].pageY - _this.state.mapTouchStart.pageY;
+            if (_this.state.tempPositionX != moveX || _this.state.tempPositionY != moveY) {
+              _this.setState({
+                tempPositionX: moveX,
+                tempPositionY: moveY
+              });
+            }
+          }
+        } catch (error) {}
+      }
+    };
+
+    _this.onTouchEnd = function (e) {
+      //e.preventDefault()
+      //console.log('onTouchEnd',e.touches)
+      // console.log(this.state.mapPositionX+this.state.tempPositionX,this.state.mapPositionY+this.state.tempPositionY)
+      try {
+        _this.setState({
+          tempPositionY: 0,
+          tempPositionX: 0,
+          mapPositionX: _this.positionControl(_this.state.mapPositionX, _this.state.tempPositionX),
+          mapPositionY: _this.positionControl(_this.state.mapPositionY, _this.state.tempPositionY)
+
+        });
+      } catch (error) {}
+    };
+
     _this.mapDrag = function (e) {
-      console.log('mapDrag?', e.clientX, e.clientY);
       try {
         if (e.pageX != 0 && e.pageY != 0) {
           var moveX = e.pageX - _this.state.mapDragStart.pageX;
           var moveY = e.pageY - _this.state.mapDragStart.pageY;
-          console.log('move?', moveX, moveY);
-          _this.setState({
-            tempPositionX: moveX,
-            tempPositionY: moveY
-          });
+          if (_this.state.tempPositionX != moveX || _this.state.tempPositionY != moveY) {
+            _this.setState({
+              tempPositionX: moveX,
+              tempPositionY: moveY
+            });
+          }
         }
       } catch (error) {}
     };
@@ -94,30 +149,143 @@ var MapContainer = function (_React$Component) {
 
     _this.mapDragEnd = function (e) {
       try {
+        _this.positionControl(_this.state.mapPositionX, _this.state.tempPositionX);
+
         _this.setState({
           tempPositionY: 0,
           tempPositionX: 0,
-          mapPositionX: _this.state.mapPositionX + _this.state.tempPositionX,
-          mapPositionY: _this.state.mapPositionY + _this.state.tempPositionY
-
+          mapPositionX: _this.positionControl(_this.state.mapPositionX, _this.state.tempPositionX),
+          mapPositionY: _this.positionControl(_this.state.mapPositionY, _this.state.tempPositionY)
         });
       } catch (error) {}
     };
 
+    _this.zoomControl = function (zoom) {
+      var option = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
+
+      if (zoom >= 3) {
+        zoom = 3;
+      } else if (zoom <= 1.75) {
+        zoom = 1.75;
+      }
+      _this.setState({
+        mapZoom: zoom
+      });
+    };
+
+    _this.positionControl = function (mapPosition, tempPosition) {
+      var position = mapPosition + tempPosition;
+      if (position > 300) {
+        position = 300;
+      }
+      if (position < -300) {
+        position = -300;
+      }
+      return position;
+    };
+
+    _this.containerMode = function (mode) {
+      var userLat = (_this.state.lat - _this.props.MapContainer.start.lat) / _this.props.MapContainer.map.lat * -1;
+      var userLot = (_this.state.lot - _this.props.MapContainer.start.lot) / _this.props.MapContainer.map.lot * -1;
+
+      switch (mode) {
+        // mode == 'map' 라면 지도를 표시합니다.
+        case 'map':
+          return React.createElement(
+            'div',
+            { id: 'MapMain',
+              tabIndex: 0, draggable: 'true',
+              ref: _this.container,
+              onDragOver: function onDragOver(e) {
+                return _this.mapDrag(e);
+              },
+              onDragStart: function onDragStart(e) {
+                return _this.mapDragStart(e);
+              },
+              onDragEnd: function onDragEnd(e) {
+                return _this.mapDragEnd(e);
+              },
+              onTouchStart: function onTouchStart(e) {
+                return _this.onTouchStart(e);
+              },
+              onTouchMove: function onTouchMove(e) {
+                return _this.onTouch(e);
+              },
+              onTouchEnd: function onTouchEnd(e) {
+                return _this.onTouchEnd(e);
+              }
+            },
+            React.createElement(MapObjcet, {
+              key: 'MapObjcet',
+              MapContainer: _this.props.MapContainer,
+              top: _this.positionControl(_this.state.mapPositionY, _this.state.tempPositionY) //773
+              , left: _this.positionControl(_this.state.mapPositionX, _this.state.tempPositionX) //773
+              , mapZoom: _this.state.mapZoom,
+              userLat: userLat,
+              userLot: userLot,
+              container: _this.container.current,
+              mapStyle: _this.state.mapStyle,
+              nodeChange: _this.nodeChange,
+              nearNode: _this.state.nearNode,
+              targetNode: _this.state.targetNode,
+              selectNode: _this.state.selectNode,
+              introBuilding: _this.state.introBuilding,
+              introBuildingChange: _this.introBuildingChange,
+              navigationMode: _this.state.navigationMode }),
+            React.createElement(MapController, {
+              mapZoom: _this.state.mapZoom,
+              zoomControl: _this.zoomControl,
+              tempMmode: _this.containerModeChange
+            })
+          );
+        case 'building':
+          return React.createElement(
+            'div',
+            { id: 'BuildingMain' },
+            React.createElement(BuildingIntro, {
+              selectNode: _this.state.selectNode,
+              containerModeChange: _this.containerModeChange
+            })
+          );
+        // mode == 'map' 라면 지도를 표시합니다.
+        default:
+          break;
+      }
+    };
+
+    _this.containerModeChange = function (mode) {
+      _this.setState({
+        containerMode: mode
+      });
+    };
+
+    _this.introBuildingChange = function (node) {
+      _this.setState({
+        introBuildingChange: node
+      });
+    };
+
     _this.container = React.createRef();
+    _this.preventDefault = function (e) {
+      e.preventDefault();
+    };
     _this.state = {
       lat: null,
       lot: null,
       mapDragStart: null,
-      mapPositionX: 0,
-      mapPositionY: 0,
+      mapTouchStart: null,
+      mapPositionX: 54,
+      mapPositionY: -33,
       tempPositionX: 0,
       tempPositionY: 0,
       mapStyle: 'normal',
       selectNode: null,
       nearNode: null,
       targetNode: null,
-      navigationMode: null
+      navigationMode: null,
+      mapZoom: 2,
+      containerMode: 'map'
     };
     return _this;
   }
@@ -125,8 +293,20 @@ var MapContainer = function (_React$Component) {
   _createClass(MapContainer, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      console.log('componentDidMount');
+      this.container.current.addEventListener('touchstart', this.preventDefault);
     }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.container.current.addEventListener('touchstart', this.preventDefault);
+    }
+
+    //////////////////////////////////////////
+    // containerMode ('map' or 'building')
+    // 맵 컨테이너의 메인부분에 표시할 정보를 선택합니다.
+    // map : 지도를 표시합니다, building : 빌딩내 정보를 표현합니다
+    //////////////////////////////////////////
+
   }, {
     key: 'render',
     value: function render() {
@@ -161,39 +341,7 @@ var MapContainer = function (_React$Component) {
       return React.createElement(
         'div',
         { id: 'MapContainer' },
-        React.createElement(
-          'div',
-          { id: 'MapMain',
-            tabIndex: 0, draggable: 'true',
-            ref: this.container,
-            onClick: function onClick(e) {
-              return console.log(_this2.nodeChange(null));
-            },
-            onDragOver: function onDragOver(e) {
-              return _this2.mapDrag(e);
-            },
-            onDragStart: function onDragStart(e) {
-              return _this2.mapDragStart(e);
-            },
-            onDragEnd: function onDragEnd(e) {
-              return _this2.mapDragEnd(e);
-            }
-          },
-          React.createElement(MapObjcet, {
-            key: 'MapObjcet',
-            MapContainer: this.props.MapContainer,
-            top: this.state.mapPositionY + this.state.tempPositionY,
-            left: this.state.mapPositionX + this.state.tempPositionX,
-            userLat: userLat,
-            userLot: userLot,
-            container: this.container.current,
-            mapStyle: this.state.mapStyle,
-            nodeChange: this.nodeChange,
-            nearNode: this.state.nearNode,
-            targetNode: this.state.targetNode,
-            selectNode: this.state.selectNode,
-            navigationMode: this.state.navigationMode })
-        ),
+        this.containerMode(this.state.containerMode),
         React.createElement(
           'div',
           { id: 'MapSide' },
@@ -204,6 +352,7 @@ var MapContainer = function (_React$Component) {
             nodeChange: this.nodeChange,
             targetNodeChange: this.targetNodeChange,
             mapChange: this.mapChange,
+            containerModeChange: this.containerModeChange,
             selectNode: this.state.selectNode
           })
         )
@@ -214,10 +363,13 @@ var MapContainer = function (_React$Component) {
   return MapContainer;
 }(React.Component);
 
-var start = { lat: 37.60965984432401, lot: 126.93169409413956 };
-var end = { lat: 37.60698981976014, lot: 126.9356589874949 };
-
-MapContainer.defaultProps = {
+var start = { lat: 37.611650, lot: 126.930180 };
+var end = { lat: 37.605490, lot: 126.937830
+  /* 기존 테스트 이미지 기준 
+  const start = {lat : 37.60965984432401,lot :126.93169409413956}
+  const end = {lat : 37.60698981976014,lot :126.9356589874949} 
+  */
+};MapContainer.defaultProps = {
   MapContainer: {
     start: start,
     end: end,
@@ -227,6 +379,75 @@ MapContainer.defaultProps = {
     }
   }
 };
+
+//////////////////////////////////////////
+// class MapController
+// 맵을 컨트롤 하는 버튼등을 그리는 컴포넌트 입니다.
+//////////////////////////////////////////
+
+var MapController = function (_React$Component2) {
+  _inherits(MapController, _React$Component2);
+
+  function MapController() {
+    var _ref;
+
+    var _temp, _this3, _ret;
+
+    _classCallCheck(this, MapController);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this3 = _possibleConstructorReturn(this, (_ref = MapController.__proto__ || Object.getPrototypeOf(MapController)).call.apply(_ref, [this].concat(args))), _this3), _this3.zoomButton = function (option) {
+      var zoom = 1;
+      switch (option) {
+        case 'plus':
+          zoom = _this3.props.mapZoom + 0.25;
+          break;
+        case 'minus':
+          zoom = _this3.props.mapZoom - 0.25;
+          break;
+        default:
+          zoom = 1;
+          break;
+      }
+      _this3.props.zoomControl(parseFloat(zoom.toFixed(1)));
+    }, _temp), _possibleConstructorReturn(_this3, _ret);
+  }
+
+  _createClass(MapController, [{
+    key: 'render',
+    value: function render() {
+      var _this4 = this;
+
+      return React.createElement(
+        'div',
+        { id: 'MapController' },
+        React.createElement(
+          'div',
+          { id: 'ZoomController' },
+          React.createElement(
+            'button',
+            { onClick: function onClick() {
+                return _this4.zoomButton('plus');
+              } },
+            '+'
+          ),
+          React.createElement(
+            'button',
+            { onClick: function onClick() {
+                return _this4.zoomButton('minus');
+              } },
+            '-'
+          )
+        )
+      );
+    }
+  }]);
+
+  return MapController;
+}(React.Component);
 
 var domContainer = document.querySelector('#MapFrame');
 ReactDOM.render(React.createElement(MapContainer, null), domContainer);

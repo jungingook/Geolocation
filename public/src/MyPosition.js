@@ -1,8 +1,6 @@
 
 class MyPosition extends React.Component {
-
-
-
+  
   render() {
 
    let myLot = Math.round(this.props.lot*100)

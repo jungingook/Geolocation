@@ -19,16 +19,16 @@ var MapTest = function (_React$Component) {
       var nearlat = void 0;
       var min = Infinity;
       var num = null;
-      for (var index = 0; index < node.length; index++) {
-        lot = Math.abs(_this.props.state.lot - node[index].lot);
-        lat = Math.abs(_this.props.state.lat - node[index].lat);
-        console.log(lot + lat);
-        if (min > lot + lat) {
-          min = lot + lat;
-          num = index;
-        }
-      }
-      console.log(min, num, '끝');
+      // for (let index = 0; index < node.length; index++) {
+      //   lot = Math.abs(this.props.state.lot - node[index].lot)
+      //   lat = Math.abs(this.props.state.lat - node[index].lat)
+      //   console.log(lot+lat)
+      //   if (min > lot+lat){
+      //     min = lot+lat
+      //     num = index
+      //   }
+      // }    
+      // console.log(min,num,'끝')
       return num;
     };
 

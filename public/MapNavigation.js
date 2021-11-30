@@ -14,6 +14,10 @@ var MapNavigation = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (MapNavigation.__proto__ || Object.getPrototypeOf(MapNavigation)).call(this, props));
 
+    _this.buildingIntro = function (value) {
+      _this.props.containerModeChange(value);
+    };
+
     _this.nav = function () {
       list = node.filter(function (node) {
         return node.type == 'Building';
@@ -25,7 +29,7 @@ var MapNavigation = function (_React$Component) {
       }
 
       point = list.map(function (node, index) {
-        return React.createElement(PlaceCard, { selectNode: _this.props.selectNode, key: index, node: node, index: index, nodeChange: _this.props.nodeChange, targetNodeChange: _this.props.targetNodeChange });
+        return React.createElement(PlaceCard, { selectNode: _this.props.selectNode, key: index, node: node, index: index, nodeChange: _this.props.nodeChange, targetNodeChange: _this.props.targetNodeChange, buildingIntro: _this.buildingIntro });
       });
 
       switch (_this.state.nav) {
@@ -56,6 +60,26 @@ var MapNavigation = function (_React$Component) {
                 'div',
                 { id: 'mapPointList' },
                 point
+              ),
+              React.createElement(
+                'div',
+                { className: 'mapPoint', onClick: function onClick() {
+                    return _this.setState({ nav: 'test' });
+                  } },
+                React.createElement(
+                  'div',
+                  { className: 'pointInfo' },
+                  React.createElement(
+                    'h3',
+                    null,
+                    '\uD14C\uC2A4\uD2B8\uBAA8\uB4DC1'
+                  ),
+                  React.createElement(
+                    'p',
+                    null,
+                    '\uD14C\uC2A4\uD2B8 \uBAA8\uB4DC\uB85C \uC9C4\uC785\uD569\uB2C8\uB2E4.'
+                  )
+                )
               )
             )
           );
@@ -72,7 +96,6 @@ var MapNavigation = function (_React$Component) {
 
     _this.state = {
       nav: 'sidebar',
-      lot: null,
       search: ''
     };
     return _this;
@@ -101,10 +124,11 @@ var PlaceCard = function (_React$Component2) {
     var _this2 = _possibleConstructorReturn(this, (PlaceCard.__proto__ || Object.getPrototypeOf(PlaceCard)).call(this, props));
 
     _this2.select = function (num) {
-      _this2.props.nodeChange(num);
-      // this.setState({
-      //   mode : 'more',
-      // })
+      if (num == _this2.props.selectNode) {
+        _this2.props.nodeChange();
+      } else {
+        _this2.props.nodeChange(num);
+      }
     };
 
     _this2.unselect = function () {
@@ -118,6 +142,7 @@ var PlaceCard = function (_React$Component2) {
       _this2.setState({
         mode: 'route'
       });
+      _this2.props.nodeChange(null);
       e.stopPropagation();
     };
 
@@ -125,6 +150,12 @@ var PlaceCard = function (_React$Component2) {
       _this2.setState({
         mode: 'info'
       });
+      e.stopPropagation();
+    };
+
+    _this2.more = function (e) {
+      _this2.props.nodeChange(_this2.props.node.num);
+      _this2.props.buildingIntro('building');
       e.stopPropagation();
     };
 
@@ -200,8 +231,8 @@ var PlaceCard = function (_React$Component2) {
               { className: 'PlaceButton' },
               React.createElement(
                 'button',
-                { className: 'router', onClick: function onClick() {
-                    return _this2.setState({ mode: 'more' });
+                { className: 'router', onClick: function onClick(e) {
+                    return _this2.more(e);
                   } },
                 React.createElement(
                   'p',
@@ -302,8 +333,8 @@ var PlaceCard = function (_React$Component2) {
               { className: 'PlaceButton' },
               React.createElement(
                 'button',
-                { className: 'router', onClick: function onClick() {
-                    return _this2.setState({ mode: 'more' });
+                { className: 'router', onClick: function onClick(e) {
+                    return _this2.more(e);
                   } },
                 React.createElement(
                   'p',
@@ -354,12 +385,16 @@ var PlaceCard = function (_React$Component2) {
                 { className: 'MoreCardButton' },
                 React.createElement(
                   'button',
-                  null,
+                  { onClick: function onClick(e) {
+                      return _this2.more(e);
+                    } },
                   '\uB354\uBCF4\uAE30'
                 ),
                 React.createElement(
                   'button',
-                  null,
+                  { onClick: function onClick(e) {
+                      return _this2.more(e);
+                    } },
                   '\uC785\uC8FC\uB2E8\uCCB4 \uC18C\uAC1C'
                 )
               )

@@ -1,4 +1,4 @@
-@font-face {
+/* @font-face {
     font-family: 'S-CoreDream-6Bold';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-6Bold.woff') format('woff');
     font-weight: normal;
@@ -9,6 +9,61 @@
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-4Regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
+} */
+
+@font-face {
+    font-family: 'Pretendard-Thin';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Thin.woff') format('woff');
+    font-weight: 100;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Pretendard-ExtraLight';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-ExtraLight.woff') format('woff');
+    font-weight: 200;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Pretendard-Light';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Pretendard-Medium';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Pretendard-SemiBold';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Pretendard-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Pretendard-ExtraBold';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-ExtraBold.woff') format('woff');
+    font-weight: 800;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Pretendard-Black';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Black.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
 }
 
 
@@ -16,7 +71,8 @@
     max-width: 1200px;
     max-height: 968px;
     margin: auto;
-    background-color: white;
+    background-color: snow;
+    font-family: 'Pretendard-Regular';
     position: relative;
     overflow: hidden;
     -ms-user-select: none; 
@@ -32,7 +88,7 @@
     max-width: 768px;
     max-height: 768px;
     margin: auto;
-    background-color: #F2EDE7;
+    background-color: #E3DCC2;
     position: relative;
     overflow: hidden;
 }
@@ -41,7 +97,7 @@
     max-width: 768px;
     height: 200px;
     margin: auto;
-    background-color: white;
+    background-color: snow;
     position: relative;
     overflow: hidden;
 }
@@ -54,6 +110,37 @@
     position: absolute;
     z-index: 0;
 }
+
+#MapController{
+    width: 100vw;
+    height: 100vw;
+    max-width: 768px;
+    max-height: 768px;
+    position: absolute;
+    z-index: 10;
+  
+}
+#ZoomController{
+    width: 30px;
+    height: 70px;
+    margin: 10px;
+    /* background-color: #fff; */
+   
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+#ZoomController button{
+    width: 30px;
+    height: 30px;
+    font-size: 25px;
+    color: white;
+    background-color: rgb(0, 26, 113);
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15), 0 6px 6px rgba(0, 0, 0, 0.3);
+}
+
 #MapNavigation{
     width: 100%;
     height: 200px;
@@ -70,7 +157,7 @@
     display: flex;
     justify-content: space-between;
     overflow: hidden;
-    font-family: 'S-CoreDream-4Regular';
+    font-family: 'Pretendard-Regular';
     width: 90%;
     margin: 0px 5% 5px;
     height: 50px;
@@ -133,14 +220,14 @@
     justify-content: space-between;
 }
 .mapPoint .pointInfo .pointheader h3{
-    font-family: 'S-CoreDream-6Bold';
+    font-family: 'Pretendard-SemiBold';
     height: 20px;
     font-size: 20px;
     margin: 5px 0px;
 }
 
 .mapPoint .pointInfo p{
-    font-family: 'S-CoreDream-4Regular';
+    font-family: 'Pretendard-Regular';
     font-size: 15px;
     height: 40px;
     margin: 10px 0px;
@@ -183,7 +270,7 @@
     box-shadow: 0 10px 35px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.1);
 }
 .router p{
-    font-family: 'S-CoreDream-4Regular';
+    font-family: 'Pretendard-Regular';
     height: 20px;
     margin: 0px;
     padding: 0px;
@@ -340,7 +427,7 @@
         width: 200px;
         text-align: center;
         border-radius: 0px 5px 0px 5px;
-        font-family: 'S-CoreDream-4Regular';
+        font-family: 'Pretendard-Regular';
         color: white;
         box-shadow: 0 35px 25px rgba(0, 0, 0, 0.05), 0 5px 5px rgba(0, 0, 0, 0.3);
         margin: 0px;
@@ -377,7 +464,7 @@
         object-fit: scale-down;
     }
     .PlaceButton button p{
-        font-family: 'S-CoreDream-6Bold';
+        font-family: 'Pretendard-SemiBold';
         width: auto;
         height: 30px;
         line-height: 30px;
@@ -429,7 +516,7 @@
         width: 200px;
         text-align: center;
         border-radius: 5px 0px 5px 0px;
-        font-family: 'S-CoreDream-4Regular';
+        font-family: 'Pretendard-Regular';
         color: white;
         box-shadow: 0 35px 25px rgba(0, 0, 0, 0.05), 0 5px 5px rgba(0, 0, 0, 0.3);
         margin: 0px;
@@ -465,7 +552,7 @@
     }
 
     .RouteCard .routerButton p{ 
-        font-family: 'S-CoreDream-4Regular';
+        font-family: 'Pretendard-Regular';
         border: 0px;
         padding: 0px;
         margin: 5px 0px 0px 0px;
@@ -517,7 +604,7 @@
         width: 200px;
         text-align: center;
         border-radius: 5px 0px 5px 0px;
-        font-family: 'S-CoreDream-4Regular';
+        font-family: 'Pretendard-Regular';
         color: white;
         box-shadow: 0 35px 25px rgba(0, 0, 0, 0.05), 0 5px 5px rgba(0, 0, 0, 0.3);
         margin: 0px;
@@ -527,7 +614,7 @@
         margin: 10px;
         height: 100px;
         word-break: keep-all;
-        font-family: 'S-CoreDream-4Regular';
+        font-family: 'Pretendard-Regular';
     }
 
     .MoreCardButton{
@@ -551,14 +638,14 @@
         box-shadow: 0 10px 35px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.1);
         display: flex;
         transition: transform 0.2s;
-        font-family: 'S-CoreDream-6Bold';
+        font-family: 'Pretendard-SemiBold';
     }
     .MoreCardButton button:hover{
         transform: scale(1.1);
     }
 
     .MoreCardButton button p{
-        font-family: 'S-CoreDream-6Bold';
+        font-family: 'Pretendard-SemiBold';
         width: 50px;
         height: 30px;
         line-height: 30px;
@@ -643,7 +730,7 @@
         width: 170px;
         text-align: center;
         border-radius: 0px 5px 0px 5px;
-        font-family: 'S-CoreDream-4Regular';
+        font-family: 'Pretendard-Regular';
         color: white;
         box-shadow: 0 35px 25px rgba(0, 0, 0, 0.05), 0 5px 5px rgba(0, 0, 0, 0.3);
         margin: 0px;
@@ -680,7 +767,7 @@
         object-fit: scale-down;
     }
     .PlaceButton button p{
-        font-family: 'S-CoreDream-6Bold';
+        font-family: 'Pretendard-SemiBold';
         width: 50px;
         height: 30px;
 
@@ -738,7 +825,7 @@
         width: 170px;
         text-align: center;
         border-radius: 5px 0px 5px 0px;
-        font-family: 'S-CoreDream-4Regular';
+        font-family: 'Pretendard-Regular';
         color: white;
         box-shadow: 0 35px 25px rgba(0, 0, 0, 0.05), 0 5px 5px rgba(0, 0, 0, 0.3);
         margin: 0px;
@@ -772,7 +859,7 @@
         box-shadow: 0 35px 25px rgba(0, 0, 0, 0.05), 0 5px 5px rgba(0, 0, 0, 0.3);
     }
     .RouteCard .routerButton p{ 
-        font-family: 'S-CoreDream-4Regular';
+        font-family: 'Pretendard-Regular';
         border: 0px;
         padding: 0px;
         margin: 5px 0px 0px 0px;
@@ -824,7 +911,7 @@
         width: 170px;
         text-align: center;
         border-radius: 5px 0px 5px 0px;
-        font-family: 'S-CoreDream-4Regular';
+        font-family: 'Pretendard-Regular';
         color: white;
         box-shadow: 0 35px 25px rgba(0, 0, 0, 0.05), 0 5px 5px rgba(0, 0, 0, 0.3);
         margin: 0px;
@@ -835,7 +922,7 @@
         height: 100px;
         font-size: 13px;
         word-break: keep-all;
-        font-family: 'S-CoreDream-4Regular';
+        font-family: 'Pretendard-Regular';
     }
 
     .MoreCardButton{
@@ -858,14 +945,14 @@
         box-shadow: 0 10px 35px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.1);
         display: flex;
         transition: transform 0.2s;
-        font-family: 'S-CoreDream-6Bold';
+        font-family: 'Pretendard-SemiBold';
     }
     .MoreCardButton button:hover{
         transform: scale(1.1);
     }
 
     .MoreCardButton button p{
-        font-family: 'S-CoreDream-6Bold';
+        font-family: 'Pretendard-SemiBold';
         width: 50px;
         height: 30px;
         line-height: 30px;
@@ -883,7 +970,8 @@
 
 
 .map1{
-    background-image: url('src/mapImg.png');
+    /* background-image: url('src/mapImg.png'); */
+    background-image: url('src/mapTest.png');
 }
 .map2{
     background-image: url('src/map3.jpg');
@@ -893,10 +981,11 @@
     height: 100vw;
     max-width: 768px;
     max-height: 768px;
-    /* background-image: url('src/mapTest1.png'); */
+    background-color: white;
     background-position: center center;
     background-size: 100% 100%;
     position: absolute;
+    transition: transform 0.3s;
 }
 #MyPosition{
     /* top:39%;
@@ -915,6 +1004,7 @@
     height: 100%;
     z-index: 2;
     position: absolute;
+    transition: transform 0.3s;
 }
 #PlaceNoti{
     width: 300px;
@@ -945,14 +1035,14 @@
     height: 50px;
     margin: 0;
     text-align: center;
-    font-family: 'S-CoreDream-4Regular';
+    font-family: 'Pretendard-Regular';
     color: white;
     color: white;
 }
 /* #PlaceNoti p{
     padding-top: 10px;
     height: 40px;
-    font-family: 'S-CoreDream-4Regular';
+    font-family: 'Pretendard-Regular';
 
     margin: 0;
     object-fit: cover;
@@ -969,4 +1059,413 @@
 }
 #testPanel{
 
+}
+
+/* 빌딩 상세정보 */
+#BuildingIntro{
+    width: 100vw;
+    height: 100vw;
+    max-width: 768px;
+    max-height: 768px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    background-color: #D8E5F0;
+    position: relative;
+    overflow: hidden;
+}
+
+#BuildingIntro #IntroHeader{
+    transition: all 0.5s;
+}
+
+#BuildingIntro #IntroHeader #IntroBG{
+    transition: all 0.5s;
+}
+#BuildingIntro #IntroHeader #IntroBG img{
+    transition: all 0.5s;
+}
+
+#BuildingIntro #IntroHeader #IntroText{
+    transition: all 0.5s;
+}
+
+#BuildingIntro #IntroHeader #IntroText h2{
+    transition: all 0.5s;
+}
+
+#BuildingIntro #IntroHeader #IntroText p{
+    transition: all 0.5s;
+}
+
+#BuildingIntro #IntroHeader #IntroControl{
+    transition: all 0.5s;
+}
+#BuildingIntro #IntroHeader #IntroControl #controlZone{
+    transition: all 0.5s;
+}
+#BuildingIntro #IntroHeader #IntroControl #controlZone #MoveMap{
+    transition: all 0.5s;
+}
+#BuildingIntro #IntroHeader #IntroControl #controlZone #MoveMap p{
+    transition: all 0.5s;
+}
+
+#BuildingIntro .IntroHeaderBig{
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 5px 5px 0px 0px;
+}
+
+#BuildingIntro .IntroHeaderBig #IntroBG{
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    position: absolute;
+    z-index: 0;
+}
+#BuildingIntro .IntroHeaderBig #IntroBG img{
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    
+}
+
+#BuildingIntro .IntroHeaderBig #IntroText{
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    z-index: 1;
+    color: white;
+    background: linear-gradient(
+        to bottom,
+        rgba(20, 20, 20, 0) 10%,
+        rgba(20, 20, 20, 0.25) 25%,
+        rgba(20, 20, 20, 0.5) 50%,
+        rgba(20, 20, 20, 0.75) 75%,
+        rgba(20, 20, 20, 1) 100%
+      );
+    background-size: cover;
+}
+
+#BuildingIntro .IntroHeaderBig #IntroText h2{
+    margin: 10px 30px;
+    padding: 0;
+    font-size: 50px;
+}
+
+#BuildingIntro .IntroHeaderBig #IntroText p{
+    margin: 10px 30px;
+    padding: 0;
+}
+
+#BuildingIntro .IntroHeaderBig #IntroControl{
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    position: absolute;
+    /* color: black;
+    background-color: white; */
+    z-index: 2;
+}
+#BuildingIntro .IntroHeaderBig #IntroControl #controlZone{
+    margin: 10px 30px;
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+}
+#BuildingIntro .IntroHeaderBig #IntroControl #controlZone #MoveMap{
+    width: 70px;
+    height: 30px;
+    background-color: white;
+    border-radius: 50px;
+    line-height: 30px;
+}
+#BuildingIntro .IntroHeaderBig #IntroControl #controlZone #MoveMap p{
+    margin: 0px;
+    padding: 0px;
+    text-align: center;
+    line-height: 30px;
+}
+
+/* 축소시 */
+#BuildingIntro .IntroHeaderSmall{
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 5px 5px 0px 0px;
+}
+
+#BuildingIntro .IntroHeaderSmall #IntroBG{
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+    position: absolute;
+    z-index: 0;
+}
+#BuildingIntro .IntroHeaderSmall #IntroBG img{
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    
+}
+
+#BuildingIntro .IntroHeaderSmall #IntroText{
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    z-index: 1;
+    color: white;
+    background: linear-gradient(
+        to bottom,
+        rgba(20, 20, 20, 0) 10%,
+        rgba(20, 20, 20, 0.25) 25%,
+        rgba(20, 20, 20, 0.5) 50%,
+        rgba(20, 20, 20, 0.75) 75%,
+        rgba(20, 20, 20, 1) 100%
+      );
+    background-size: cover;
+}
+
+#BuildingIntro .IntroHeaderSmall #IntroText h2{
+    margin: 10px 30px;
+    padding: 0;
+    font-size: 50px;
+}
+
+#BuildingIntro .IntroHeaderSmall #IntroText p{
+    margin: 10px 30px;
+    padding: 0;
+}
+
+#BuildingIntro .IntroHeaderSmall #IntroControl{
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+    position: absolute;
+    /* color: black;
+    background-color: white; */
+    z-index: 2;
+}
+#BuildingIntro .IntroHeaderSmall #IntroControl #controlZone{
+    margin: 10px 30px;
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+}
+#BuildingIntro .IntroHeaderSmall #IntroControl #controlZone #MoveMap{
+    width: 70px;
+    height: 30px;
+    background-color: white;
+    border-radius: 50px;
+    line-height: 30px;
+}
+#BuildingIntro .IntroHeaderSmall #IntroControl #controlZone #MoveMap p{
+    margin: 0px;
+    padding: 0px;
+    text-align: center;
+    line-height: 30px;
+}
+
+#IntroBody{
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+
+#BuildingIntro #MoreInfo{
+    margin: 10px 30px;
+    padding: 0;
+}
+
+#BuildingIntro #MoreInfo li{
+    padding: 5px 0px;
+}
+
+
+#BuildingIntro #OrganizationInfo{
+    margin: 0px 10px 10px 30px;
+    padding: 0;
+}
+
+#BuildingIntro .minititle{
+    font-family: 'Pretendard-SemiBold';
+    display: flex;
+    color: rgb(0, 26, 113);
+}
+#BuildingIntro .titleHeader{
+    width: 10px;
+    height: 25px;
+    background-color: rgb(0, 26, 113);
+    display: flex;
+    margin-right: 10px;
+}
+
+#BuildingIntro #OrganizationInfo #OrganizationList{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+
+#BuildingIntro #OrganizationInfo #OrganizationList .organizationCard{
+    width: 336px;
+    margin-bottom: 36px;
+    height: 168px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+}
+
+#BuildingIntro #OrganizationInfo #OrganizationList .organizationCard:nth-child(odd){
+    margin-right: 18px;
+}
+
+#BuildingIntro #OrganizationInfo #OrganizationList .organizationCard:nth-child(even){
+    margin-left: 18px;
+}
+
+#BuildingIntro #OrganizationInfo #OrganizationList .organizationCard .organizationCardFront{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 0;
+}
+#BuildingIntro #OrganizationInfo #OrganizationList .organizationCard .organizationCardFront img{
+    display: flex;
+    height: 100px;
+    width: 100px;
+    padding: 34px;
+    object-fit: scale-down;
+}
+#BuildingIntro #OrganizationInfo #OrganizationList .organizationCard .organizationCardFront h3{
+    display: flex;
+    height: 168px;
+    width: 168px;
+    font-family: 'Pretendard-Bold';
+    color: rgb(0, 26, 113);
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin: 0px;
+}
+
+
+
+#BuildingIntro #OrganizationInfo #OrganizationList .organizationCard .organizationCardBack{
+    width: 100%;
+    height: 168px;
+    position: absolute;
+    z-index: 1;
+    background-color: rgba(255, 255, 255, .9);
+    animation-name: organizationCard;
+    animation-duration: 0.3s;
+}
+
+@keyframes organizationCard {
+    from {
+        opacity: 0%;
+    }
+  
+    to {
+        opacity: 100%;
+    }
+  }
+
+@keyframes organizationHeader {
+    from {
+        transform: translateY(-100%);
+    }
+  
+    to {
+        transform: translateY(0%);
+    }
+  }
+
+@keyframes organizationIntro {
+    from {
+        transform: translateY(100%);
+    }
+  
+    to {
+        transform: translateY(0%);
+    }
+}
+
+#BuildingIntro #OrganizationInfo #OrganizationList .organizationCard .organizationCardBack .organizationHeader{
+    width: 100%;
+    height: 70px;
+    animation-name: organizationHeader;
+    animation-duration: 0.3s;
+}
+
+
+#BuildingIntro #OrganizationInfo #OrganizationList .organizationCard .organizationCardBack .organizationHeader h3{
+    width: 100%;
+    margin: 0px;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+}
+
+
+#BuildingIntro #OrganizationInfo #OrganizationList .organizationCard .organizationCardBack .organizationHeader .organizationBnt{
+    display: flex;
+    width: 100%;
+}
+#BuildingIntro #OrganizationInfo #OrganizationList .organizationCard .organizationCardBack .organizationHeader .organizationBnt p{
+    margin: 0px;
+    padding: 5px 10px;
+    height: 20px;
+}
+
+#BuildingIntro #OrganizationInfo #OrganizationList .organizationCard .organizationCardBack span{
+    margin: 0px 20px;
+    display: flex;
+    /* border-radius: 5px; */
+    /* box-shadow: 0 10px 35px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.1); */
+}
+
+#BuildingIntro #OrganizationInfo #OrganizationList .organizationCard .organizationCardBack h3{
+    margin: 0px;
+    padding: 0px;
+}
+
+#BuildingIntro #OrganizationInfo #OrganizationList .organizationCard .organizationCardBack .organizationIntro{
+    height: 100px;
+    animation-name: organizationIntro;
+    animation-duration: 0.3s;
+}
+#BuildingIntro #OrganizationInfo #OrganizationList .organizationCard .organizationCardBack .organizationIntro p{
+    margin: 10px 20px;
+    padding: 0px;
+    height: 80px;
+    
+}
+
+@media screen and (max-width: 1199px) { 
+    #BuildingIntro{
+        width: 768px;
+        height: 768px;
+        margin: auto;
+        position: relative;
+        overflow: hidden;
+    }
 }

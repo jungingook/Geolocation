@@ -14,16 +14,16 @@ class MapTest extends React.Component {
       let nearlat
       let min = Infinity
       let num = null
-      for (let index = 0; index < node.length; index++) {
-        lot = Math.abs(this.props.state.lot - node[index].lot)
-        lat = Math.abs(this.props.state.lat - node[index].lat)
-        console.log(lot+lat)
-        if (min > lot+lat){
-          min = lot+lat
-          num = index
-        }
-      }    
-      console.log(min,num,'끝')
+      // for (let index = 0; index < node.length; index++) {
+      //   lot = Math.abs(this.props.state.lot - node[index].lot)
+      //   lat = Math.abs(this.props.state.lat - node[index].lat)
+      //   console.log(lot+lat)
+      //   if (min > lot+lat){
+      //     min = lot+lat
+      //     num = index
+      //   }
+      // }    
+      // console.log(min,num,'끝')
       return(num)
     }
 

@@ -7,12 +7,13 @@
     <link rel="stylesheet" href="map.css">
     <link rel="stylesheet" href="other.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
   </head>
-  <body>
+  <body onload="init();">
       <!-- ... existing HTML ... -->
       <div></div>
 
-      <div id="header">
+      <div id="header" >
         <div class="headerIMG">
           <img class="navIMG" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1200px-Hamburger_icon.svg.png"/>
           <img src="https://www.innovationpark.kr/wp-content/uploads/2018/08/logo_gnb.png"/>
@@ -35,9 +36,14 @@
       <script src="MapObjcet.js"></script>
       <script src="MapTest.js"></script>
       <script src="MapNode.js"></script>
+
       <script src="MapBackground.js"></script>
       <script src="MapNavigation.js"></script>
       <script src="MapContainer.js"></script>
+
+      <!-- 빌딩 상세정보 -->
+      <script src="BuildingIntro.js"></script>
+      <script src="Organization.js"></script>
 
       <!-- The core Firebase JS SDK is always required and must be listed first -->
       <script src="/__/firebase/8.8.0/firebase-app.js"></script>
@@ -47,6 +53,17 @@
 
       <!-- Initialize Firebase -->
       <script src="/__/firebase/init.js"></script>
+
+      <script>
+        function startTouch(ev) {
+          console.log('테스트')
+          // Process the event
+        }
+        function init() {
+          let el = document.getElementById('header');
+          el.ontouchstart = startTouch;
+        }
+        </script>
 
   </body>
 </html>

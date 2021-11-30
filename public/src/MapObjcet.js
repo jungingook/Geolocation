@@ -11,13 +11,11 @@ class MapObjcet extends React.Component {
       end : 1,
       route : [],
       polling : 0,
+      pollingInterval : null
     };
   }
-  
 
-  
   dijkstra = (start,end)=>{
-    console.log('시작',start,end)
     nextNode = (startNode,targetNode) =>{
       // console.log('경로 : ',node[startNode].alias,'-->',node[targetNode.vertex].alias,'갱신여부 : ',distance[targetNode.vertex]>targetNode.dist+distance[startNode])
       if(distance[targetNode.vertex]>targetNode.dist+distance[startNode]){
@@ -28,7 +26,6 @@ class MapObjcet extends React.Component {
     }
     
     findRoute = (targetNode) =>{
-      console.log(targetNode,prev[targetNode],'테스트중')
       if (prev[targetNode]){
         route.push(prev[targetNode])
         findRoute(prev[targetNode])
@@ -42,7 +39,7 @@ class MapObjcet extends React.Component {
     let findNode = []
     let num =node[target].num
     // 모든 경로를 무한으로 초기화 (Number.MAX_SAFE_INTEGER 변경예정)
-    let distance = Array.from({length: node.length}, () => Infinity);
+    let distance = Array.from({length: node.length}, () => Number.MAX_SAFE_INTEGER);
     // 나의 위치를 초기화합니다.
     distance[node[target].num]= 0
     prev[node[target].num]= 0
@@ -80,8 +77,8 @@ class MapObjcet extends React.Component {
   }
 
   mapObjs = (inpark) =>{
-    let objs =[<MapBackground style={this.props.mapStyle}/>]
-    objs.push(<MapNode lot={this.props.userLot} lat={this.props.userLat} MapContainer={this.props.MapContainer} nodeChange={this.props.nodeChange} route={this.state.route} navigationMode={this.props.navigationMode}/>)
+    let objs =[<MapBackground style={this.props.mapStyle} mapZoom={this.props.mapZoom}/>]
+    objs.push(<MapNode lot={this.props.userLot} lat={this.props.userLat} MapContainer={this.props.MapContainer} nodeChange={this.props.nodeChange} route={this.state.route} navigationMode={this.props.navigationMode} mapZoom={this.props.mapZoom}/>)
     if(this.props.selectNode!=null){
       objs.push(<PlaceNoti navigationStart={this.navigationStart} navigationEnd={this.navigationEnd} node={this.props.selectNode} lot={this.props.userLot} lat={this.props.userLat} MapContainer={this.props.MapContainer}/>)
     }
@@ -122,25 +119,45 @@ class MapObjcet extends React.Component {
     this.dijkstra(start,end)
   }
 
+  componentDidUpdate(prevProps, prevState) {
+      if(this.props.navigationMode != prevProps.navigationMode){
+        this.navigationRoute()
+        if(this.props.navigationMode == 'myLocation' ){
+          let polling = setInterval(this.polling, 1000)
+          this.setState({
+              pollingInterval : polling,
+          },)
+        }
+      }
+      if(this.props.navigationMode != 'myLocation' ){
+        clearInterval(this.state.pollingInterval);
+      }
+  }
+
   componentDidMount() {
     if(this.props.parents != 'view'){
     // AJAX 통신 마운트
     // 내부 카운터 마운트
-    let polling = setInterval(this.polling, 1000)
-    this.setState({
-        pollingInterval : polling,
-    },)
+
     }
   }
 
   componentWillUnmount() {
+    // clearInterval(this.state.pollingInterval);
       if(this.props.parents != 'view'){
           // 내부 카운터 언마운트
           clearInterval(this.state.pollingInterval);
       }
   }
+
+    // 최적화 필요!!! 
+    // # 1 마이 로케이션 사용 안하면 GPS 요구 하지 않도록 변경 
+    // # 2 내 위치가 파크 주변이 아닌경우 폴링 취소, 파크인경우에만 허용
   polling = () =>{
+    if(this.props.navigationMode == "myLocation"){
       this.navigationRoute()
+      console.log('테스트중',this.props.navigationMode)
+    }
       // this.setState({
       //     polling : this.state.polling +1
       // })
@@ -156,3 +173,4 @@ class MapObjcet extends React.Component {
     )
   }
 }
+

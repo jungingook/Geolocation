@@ -69,7 +69,7 @@ class MapNode extends React.Component {
         );    
         
         return (
-            <svg id="MapNode" viewBox="0 0 1000 1000" >
+            <svg id="MapNode" viewBox="0 0 1000 1000" style={{'transform': 'scale('+this.props.mapZoom+')'}}>
                 {this.guideLine()}
                 {mapNode}
          

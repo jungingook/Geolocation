@@ -5,11 +5,15 @@ class MapNavigation extends React.Component {
     super(props);
     this.state = { 
       nav : 'sidebar',
-      lot : null,
       search : '',
     };
   }
+  
 
+  buildingIntro = (value) =>{
+    this.props.containerModeChange(value)
+  }
+  
   
     nav = () =>{
       list = node.filter( node =>(node.type=='Building'));
@@ -19,7 +23,7 @@ class MapNavigation extends React.Component {
       
       point = list.map(
           (node,index) => (
-            <PlaceCard selectNode={this.props.selectNode} key={index} node={node} index={index} nodeChange={this.props.nodeChange} targetNodeChange={this.props.targetNodeChange}/> 
+            <PlaceCard selectNode={this.props.selectNode} key={index} node={node} index={index} nodeChange={this.props.nodeChange} targetNodeChange={this.props.targetNodeChange} buildingIntro={this.buildingIntro} /> 
           ) 
       );    
 
@@ -39,14 +43,14 @@ class MapNavigation extends React.Component {
                 <div id="mapPointList">
                   {point}
                 </div>
-              {/*          
+                      
               <div className="mapPoint" onClick={()=>this.setState({nav : 'test'})}>
                 <div className="pointInfo">
                   <h3>테스트모드1</h3>
                   <p>테스트 모드로 진입합니다.</p>
                 </div>
               </div> 
-              */}
+              
 
               </div>
             </div>
@@ -86,10 +90,11 @@ class MapNavigation extends React.Component {
     
 
       select = (num) =>{
-        this.props.nodeChange(num)
-        // this.setState({
-        //   mode : 'more',
-        // })
+        if(num==this.props.selectNode){
+          this.props.nodeChange()
+        }else{
+          this.props.nodeChange(num)
+        }
       }
       unselect = () =>{
         this.props.nodeChange(null)
@@ -101,6 +106,7 @@ class MapNavigation extends React.Component {
         this.setState({
           mode : 'route',
         })
+        this.props.nodeChange(null)
         e.stopPropagation();
       }
       back = (e) =>{
@@ -109,6 +115,13 @@ class MapNavigation extends React.Component {
         })
         e.stopPropagation();
       }
+
+      more = (e) =>{
+        this.props.nodeChange(this.props.node.num)
+        this.props.buildingIntro('building')
+        e.stopPropagation()
+      }
+
       content = () => {
 
 
@@ -141,7 +154,8 @@ class MapNavigation extends React.Component {
                 {/* <p className="PlaceSummary"> {this.props.node.summary}</p> */}
               </div>
               <div className="PlaceButton">
-                <button className="router" onClick={()=>this.setState({mode:'more'})}><p>건물안내</p></button>
+                {/* <button className="router" onClick={()=>this.setState({mode:'more'})}><p>건물안내</p></button> */}
+                <button className="router" onClick={(e)=>this.more(e)}><p>건물안내</p></button>
                 <button className="more" onClick={(e)=>this.route(e)}><p>길찾기</p></button>
           
               </div>
@@ -177,7 +191,8 @@ class MapNavigation extends React.Component {
             
               </div>
               <div className="PlaceButton">
-              <button className="router" onClick={()=>this.setState({mode:'more'})}><p>건물안내</p></button>
+                {/* <button className="router" onClick={()=>this.setState({mode:'more'})}><p>건물안내</p></button> */}
+                <button className="router" onClick={(e)=>this.more(e)}><p>건물안내</p></button>
               <button className="more" onClick={(e)=>this.back(e)}><p>뒤로</p></button>
                 {/* <button className="router" onClick={()=>this.setState({mode:'more'})}><p>더보기</p></button> */}
               </div>
@@ -193,10 +208,10 @@ class MapNavigation extends React.Component {
                 </div>
                 <p className="PlaceSummary"> {this.props.node.summary}</p>
                 <div className="MoreCardButton">
-                  <button>
+                  <button onClick={(e)=>this.more(e)}>
                     더보기
                   </button>
-                  <button>
+                  <button onClick={(e)=>this.more(e)}>
                     입주단체 소개
                   </button>
                 </div>

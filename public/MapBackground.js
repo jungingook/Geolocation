@@ -27,7 +27,7 @@ var MapBackground = function (_React$Component) {
             return React.createElement(
                 "div",
                 { id: "MapBackground" },
-                React.createElement("div", { id: "tempBack", className: this.props.style == 'painting' ? 'map2' : 'map1' })
+                React.createElement("div", { id: "tempBack", style: { 'transform': 'scale(' + this.props.mapZoom + ')' }, className: this.props.style == 'painting' ? 'map2' : 'map1' })
             );
         }
     }]);

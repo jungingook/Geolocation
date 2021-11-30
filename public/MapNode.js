@@ -96,7 +96,7 @@ var MapNode = function (_React$Component) {
 
             return React.createElement(
                 'svg',
-                { id: 'MapNode', viewBox: '0 0 1000 1000' },
+                { id: 'MapNode', viewBox: '0 0 1000 1000', style: { 'transform': 'scale(' + this.props.mapZoom + ')' } },
                 this.guideLine(),
                 mapNode
             );

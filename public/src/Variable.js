@@ -130,6 +130,8 @@ const node =[
         lat:37.609319784458094,
         lot:126.93437017547136,
         summary:'질병관리본부 시절 실험에 필요한 약물들을 보관하던 시약 창고로 쓰였습니다. 시약창고 선반과 목조 구조물 등 역사와 흔적을 최대한 보존하는 방식으로 리모델링하여 예술이 살아 숨 쉬는 전시공간으로 활용하고 있습니다.',
+        intro : '질병관리본부 시절 실험에 필요한 약물들을 보관하던 시약 창고로 쓰였습니다. 시약창고 선반과 목조 구조물 등 역사와 흔적을 최대한 보존하는 방식으로 리모델링하여 예술이 살아 숨 쉬는 전시공간으로 활용하고 있습니다.',
+        infoHTML : null,
         img:'https://www.innovationpark.kr/wp-content/uploads/2020/03/파크아카이빙혁신파크_SeMA1-scaled.jpg',
         group : null,
     },
@@ -141,6 +143,8 @@ const node =[
         lat:37.607957995285346,
         lot:126.93485411682077,
         summary:'공유와 나눔의 가치를 생산하고 확산하는 공간입니다. 공용작업장, 공유창고 등의 공간과 중간지원조직이 입주해 있습니다.',
+        intro : '공유와 나눔의 가치를 생산하고 확산하는 공간입니다. 공용작업장, 공유창고 등의 공간과 중간지원조직이 입주해 있습니다.',
+        infoHTML : <div><h3 className="minititle"> <span className="titleHeader"/> 층별안내 </h3><ul><li>1F 공유창고</li><li>2F 공용작업장 / 다목적홀 </li><li>3F~5F 크리킨디센터 </li><li>6F 서울시성평등활동지원센터 </li><li>RF 옥상공유지 </li></ul></div>,
         img:'https://www.innovationpark.kr/wp-content/uploads/2020/03/파크아카이빙혁신파크_공유동2-scaled.jpg',
         group : null,
         
@@ -154,7 +158,10 @@ const node =[
         lat:37.60915805917087,
         lot:126.93259706409312,
         summary:'시민 대상의 대중문화 공동 작업장',
+        intro : '시민 대상의 대중문화 공동 작업장',
+        infoHTML : <div><h3 className="minititle"> <span className="titleHeader"/> 층별안내 </h3><ul><li>1F 대강당</li><li>2F 워크숍룸</li></ul></div>,
         img:'https://www.innovationpark.kr/wp-content/uploads/2020/03/파크아카이빙혁신파크_극장동3-scaled.jpg',
+
         group : null,
     },
     {
@@ -165,7 +172,10 @@ const node =[
         lat:37.609192906419956,
         lot:126.93324035592897,
         summary:'서울시식생활종합지원센터에서 운영하는 식문화 실험 공간',
+        intro : '식문화의 새로운 패러다임을 고민하는 공간입니다. 다양한 식재료에 담긴 가치와 바른 식생활 정보를 시민과 나눕니다.',
+        infoHTML : <div><h3 className="minititle"> <span className="titleHeader"/> 층별안내 </h3><ul><li>1F~2F 주방 / 워크숍룸 <small>(서울시 식생활종합지원센터 운영)</small></li></ul></div>,
         img:'https://www.innovationpark.kr/wp-content/uploads/2020/03/파크아카이빙혁신파크_맛동4-scaled.jpg',
+
     },    
     {
         num : 14,
@@ -175,7 +185,10 @@ const node =[
         lat:37.6093757914488,
         lot:126.934062628268,
         summary:'전문 장비와 전문가가 상주하는 목공 작업장',
+        intro : '',
+        infoHTML : null,
         img:'https://www.innovationpark.kr/wp-content/uploads/2020/03/파크아카이빙혁신파크_우드파크2-scaled.jpg',
+
     },
     {
         num : 15,
@@ -185,6 +198,10 @@ const node =[
         lat:37.608588150937656,
         lot:126.93376609414261,
         summary:'서울시 지원조직 및 혁신가 입주 공간',
+        intro : '다양한 혁신가 그룹과 중간지원조직이 입주해 활동하는 공간입니다. 1~2층은 카페와 오픈스페이스를 마련해 시민 누구나 편안하게 쉬거나 담소를 나눌 수 있습니다',
+        infoHTML : <div>
+            <h3 className="minititle"> <span className="titleHeader"/> 층별안내 </h3><ul><li>1F 다목적홀 ‘활력’ / 세미나실 / 창문카페 / 서로배움터 / 서로배움터통합 / 스페이스류</li><li>2F 작은이야기방 / 큰이야기방 / 모두모임방 / 오픈스페이스 / 운동방 / 녹음방 / 옥상공유지 </li><li>3F~6F 입주사 사무실 </li><li>5F 옥상공유지 </li></ul>
+            <h3 className="minititle"> <span className="titleHeader"/> 대관안내 </h3><ul><li>1F 다목적홀 ‘활력’ / 세미나실 / 창문카페 대관 :  </li><li> 1F 서로배움터1 / 서로배움터2 / 서로배움터통합 / 스페이스류 대관 :  </li><li>2F 작은이야기방 1~5 / 큰이야기방 1~2 / 모두모임방 1~2 / 오픈스페이스 / 운동방 / 녹음방  대관 : </li></ul></div>,
         img:'https://www.innovationpark.kr/wp-content/uploads/2020/03/파크아카이빙혁신파크_미래청5-scaled.jpg',
     },
     {
@@ -195,6 +212,8 @@ const node =[
         lat:37.60850421375721,
         lot:126.9350328022683,
         summary:'혁신가 입주 및 다목적 실험 공간',
+        intro : '수 천 가지 상상을 현실로 만드는 실천의 공간입니다. 다양한 혁신단체들의 개별·코워킹 사무실로 쓰이며 시민을 위한 카페와 전시체험공간을 갖추어 편하게 담소를 나누거나 문화 체험을 즐길 수 있습니다.',
+        infoHTML : <div><h3 className="minititle"> <span className="titleHeader"/> 층별안내 </h3><ul><li>1F 전시체험공간 / 로비 / 상상오름1(열린 무대)</li><li>2F 글로벌 코워킹존 / 상상의숲(교육장) / 상상이상1~5(회의실) / 상상오름2(열린 무대) </li><li>3F 사회혁신 프로젝트존 / 오픈스페이스 </li><li>4F 사회혁신 프로젝트존 / 상상큐브1~4(회의실) / 오픈스페이스 / 옥상공유지 </li><li>5F 아트업서울 / 옥상공유지 </li></ul></div>,
         img:'https://www.innovationpark.kr/wp-content/uploads/2020/03/파크아카이빙혁신파크_상상청1-scaled.jpg',
     },
     {
@@ -205,6 +224,8 @@ const node =[
         lat:37.60757102061909,
         lot:126.93459736168829,
         summary:'시정·시민 기록을 수집, 기록의 가치를 공유하는 공간',
+        intro : '시민과 함께 기록의 가치를 공유하고자 건립된 서울의 기록관리 전문기',
+        infoHTML : <div><h3 className="minititle"> <span className="titleHeader"/> 층별안내 </h3><ul><li>1F 비지터 센터</li><li>2F 기록 열람실 / 기록 전시실 / 아카이브 샵</li><li>3F 서고 / 서울기록원 사무실</li></ul></div>,
         img:'https://www.innovationpark.kr/wp-content/uploads/2020/03/파크아카이빙혁신파크_서울기록원2-scaled.jpg',
     },
     {
@@ -215,6 +236,8 @@ const node =[
         lat:37.60726430880799,
         lot:126.93437210843615,
         summary:'50+세대의 인생 재설계 지원 공간',
+        intro : '청년과 시니어라면 누구나 목소리를 낼 수 있는 세대공간 \n 함께 배우고, 스스로 만들어 가는 50+세대(50~64세)를 위한 공간입니다. 서울50플러스재단이 운영하고 있으며 다양한 모임과 학습이 가능한 시설이 조성되어 있습니다',
+        infoHTML : null,
         img:'https://www.innovationpark.kr/wp-content/uploads/2020/03/파크아카이빙혁신파크_오십플러스1-scaled.jpg',
     },
     {
@@ -225,6 +248,8 @@ const node =[
         lat:37.60806697542989,
         lot:126.93332234337605,
         summary:'다채로운 혁신 활동이 움트고 자라나는 공간',
+        intro : '다채로운 혁신 활동이 움트고 자라나는 야외공간',
+        infoHTML : <div><h3 className="minititle"> <span className="titleHeader"/> 층별안내 </h3><ul><li>혁신광장 </li><li>피아노숲</li><li>전봇대집</li></ul><p>대관을 하신후 다양한 행사를 진행할 수 있습니다.</p></div>,
         img:'https://www.innovationpark.kr/wp-content/uploads/2020/03/파크아카이빙혁신파크_야외공간6-scaled.jpg',
     },
     {
@@ -235,6 +260,8 @@ const node =[
         lat:37.60831486600527,
         lot:126.93448426849724,
         summary:'시민과 혁신가의 만남 공간',
+        intro : '시민과 혁신가의 만남 공간',
+        infoHTML : <div><h3 className="minititle"> <span className="titleHeader"/> 층별안내 </h3><ul><li>2F 느티나무홀 / 상상마루(회의실) </li><li>RF 옥상공유지</li></ul></div>,
         img:'https://www.innovationpark.kr/wp-content/uploads/2020/03/파크아카이빙혁신파크_연결동2-scaled.jpg',
     },
     {
@@ -245,6 +272,11 @@ const node =[
         lat:37.60882518475889,
         lot:126.93472502865448,
         summary:'혁신가들의 실험과 휴식이 있는 소셜 커뮤니티 호스텔',
+        intro : '다양한 혁신가들의 실험과 휴식이 있는 소셜 커뮤니티 호스텔입니다. 유의미한 경험이 일어나는 숙박·연수·커뮤니티 공간으로, 소셜 섹터를 포함한 여러 분야의 파트너와 함께 즐거운 공간 실험을 지속합니다.',
+        infoHTML : <div>
+            <h3 className="minititle"> <span className="titleHeader"/> 중요사항 </h3><b>서울혁신파크 연수동은 안전하고 편안한 시설 제공을 위해 건물보수를 진행합니다. 해당 기간 동안 연수동 이용이 불가하오며, 서울혁신파크 홈페이지 및 SNS 채널을 통해 운영개시일자를 공지할 예정이오니 이용에 참고바랍니다.</b>
+            <h3 className="minititle"> <span className="titleHeader"/> 층별안내 </h3><ul><li>1F 소셜다이닝룸 / 세탁실 / 세미나실 </li><li>2F 1~2인용 객실 / 3~4인용 객실</li><li>3F 1~2인용 객실 / 3~4인용 객실 / 7~8인용 온돌방</li><li>RF 옥상공유지</li></ul>
+            </div>,
         img:'https://www.innovationpark.kr/wp-content/uploads/2020/03/파크아카이빙혁신파크_연수동2-scaled.jpg',
     },
     {
@@ -255,6 +287,8 @@ const node =[
         lat:37.60925226850322,
         lot:126.9329198987966,
         summary:'예술실험공간',
+        intro : '폐수처리장으로 사용되었던 건물로 옛 시설을 활용한 문화예술 작업과 다양한 장르의 융합 및 협업을 통한 예술 실험을 하는 공간',
+        infoHTML : <div><h3 className="minititle"> <span className="titleHeader"/> 층별안내 </h3><ul><li>1F~2F (구)폐수처리시설</li><li>3F 전시공간 / 세라믹 작업공간</li></ul></div>,
         img:'https://www.innovationpark.kr/wp-content/uploads/2020/03/파크아카이빙혁신파크_예술동1-scaled.jpg',
     },
     {
@@ -265,6 +299,8 @@ const node =[
         lat:37.60880180460156,
         lot:126.93216888128909,
         summary:'버려진 자원의 재사용을 모색하는 활동 공간',
+        intro : '장난감, 현수막, 피아노처럼 버려지는 자원을 활용해 새로운 쓰임을 모색하는 활동이 다양하게 펼쳐지는 곳입니다.',
+        infoHTML : null,
         img:'https://www.innovationpark.kr/wp-content/uploads/2020/03/파크아카이빙혁신파크_재생동2-scaled.jpg',
     },
     {
@@ -275,6 +311,11 @@ const node =[
         lat:37.60923740213418,
         lot:126.93348316376975,
         summary:'지식과 기술을 공유하며 일상을 유쾌하게 만드는 사람들의 공간입니다.',
+        intro : '지식과 기술을 공유하며 일상을 유쾌하게 만드는 사람들의 공간입니다. 3D 프린터, 레이저커터 등 디지털 장비로 시제품과 일상에 필요한 제작물을 직접 만들어볼 수 있는 서울이노베이션팹랩, 자연에너지와 주변 자원을 활용해 누구나 배울 수 있는 적정기술로 대안의 삶을 실현하는 적정기술랩이 함께 있습니다.',
+        infoHTML : <div>
+            <h3 className="minititle"> <span className="titleHeader"/> 층별안내 </h3><ul><li>1F 서울이노베이션팹랩</li><li>2F 적정기술랩</li></ul>
+            <h3 className="minititle"> <span className="titleHeader"/> 문의안내 </h3><ul><li>전화 : <a href='tel:02-6365-6835'>02-6365-6835</a></li><li>이메일 : <a href="mailto:fablab@innovationpark.kr">fablab@innovationpark.kr</a> </li><li>페이스북 : <a href="www.facebook.com/makerpark19">www.facebook.com/makerpark19</a></li><li>인스타그램 : <a href="http://instagram.com/innovationfablab">http://instagram.com/innovationfablab</a></li><li>서울이노베이션팹랩 홈페이지 : <a href="https://www.innofablab.kr/">https://www.innofablab.kr/</a></li></ul>
+            </div>,
         img:'https://www.innovationpark.kr/wp-content/uploads/2020/03/파크아카이빙혁신파크_제작동1-scaled.jpg',
     },
     {
@@ -285,6 +326,8 @@ const node =[
         lat:37.60744615418906,
         lot:126.93375674838013,
         summary:'서울시 지원조직 및 시민 편의 공간',
+        intro : '서울시 지원조직 및 시민 편의 공간',
+        infoHTML : <div><h3 className="minititle"> <span className="titleHeader"/> 층별안내 </h3><ul><li>1F 시설관리실 / 우체국 / 건강혁신살림의원 / 더스마일치과의원</li><li>2F 다목적실 / 서울시청년활동지원센터 / 칼폴라니 사회경제연구소 / 로쉬코리아</li><li>3F 서울시립은평청소년성문화센터 / 오디세이학교</li></ul></div>,
         img:'https://www.innovationpark.kr/wp-content/uploads/2020/03/파크아카이빙혁신파크_참여동2-scaled.jpg',
     }, 
     {
@@ -295,6 +338,8 @@ const node =[
         lat:37.60876781371208,
         lot:126.93272141086058,
         summary:'청년들이 다양한 실험과 시도를 통해 경험을 축적하는 공간',
+        intro : '서울시 지원조직 및 시민 편의 공간',
+        infoHTML : <div><h3 className="minititle"> <span className="titleHeader"/> 층별안내 </h3><ul><li>1F 시설관리실 / 우체국 / 건강혁신살림의원</li><li>2F 다목적실 / 서울시 서북권직장맘지원센터 / 서울시청년활동지원센터 / 칼폴라니 사회경제연구소</li><li>3F 서울크리에이티브랩 / 오디세이학교</li></ul></div>,
         img:'https://www.innovationpark.kr/wp-content/uploads/2020/03/파크아카이빙혁신파크_청년청3-scaled.jpg',
     },
     {
@@ -305,6 +350,8 @@ const node =[
         lat:37.60795399540395,
         lot:126.93422076809068,
         summary:'서울혁신파크 홍보 및 안내 공간',
+        intro : '서울혁신파크 홍보 및 안내 공간',
+        infoHTML : null,
         img:'https://www.innovationpark.kr/wp-content/uploads/2020/03/파크아카이빙혁신파크052_홍보관1-scaled.jpg',
     },
     {
@@ -315,6 +362,8 @@ const node =[
         lat:37.60767139221308,
         lot:126.93324981304163,
         summary:'',
+        intro : '',
+        infoHTML : null,
         img:'https://www.innovationpark.kr/wp-content/uploads/2020/07/5%EC%A3%BC%EB%85%84BA%ED%94%BC%EC%95%84%EB%85%B8%EC%88%B202.jpg',
     },
     {
@@ -324,6 +373,9 @@ const node =[
         link:[],
         lat:null,
         lot:null,
+        summary:'',
+        intro : '',
+        infoHTML : null,
     },    
     {
         num : 30,
@@ -575,4 +627,49 @@ const node =[
         lot:126.93513434933583,
     } 
 
+]
+
+
+
+const OrganizationData = [
+   
+    {
+        name : '공동체IT사회적협동조합',
+        building : '미래청',
+        floor : '',
+        roomNumber : '',
+        mainIMG : '',
+        intro : '',
+        phone : '',
+        //email : '',
+        website : '',
+        //sns : '',
+        otherING : null,
+    },
+    {
+        name : '공동체IT사회적협동조합',
+        building : '미래청',
+        floor : '',
+        roomNumber : '',
+        mainIMG : '',
+        intro : '',
+        phone : '',
+        email : '',
+        website : '',
+        sns : '',
+        otherING : null,
+    },
+    {
+        name : '공동체IT사회적협동조합',
+        building : '미래청',
+        floor : '',
+        roomNumber : '',
+        mainIMG : '',
+        intro : '',
+        phone : '',
+        email : '',
+        website : '',
+        sns : '',
+        otherING : null,
+    },
 ]
