@@ -5,6 +5,8 @@ class MapObjcet extends React.Component {
 
   constructor(props) {
     super(props);
+    this.container = React.createRef();
+    this.preventDefault = (e) => {e.preventDefault()}
     this.state = { 
       // inPark : false,
       start : 1,
@@ -16,6 +18,7 @@ class MapObjcet extends React.Component {
   }
 
   dijkstra = (start,end)=>{
+
     nextNode = (startNode,targetNode) =>{
       // console.log('경로 : ',node[startNode].alias,'-->',node[targetNode.vertex].alias,'갱신여부 : ',distance[targetNode.vertex]>targetNode.dist+distance[startNode])
       if(distance[targetNode.vertex]>targetNode.dist+distance[startNode]){
@@ -53,11 +56,6 @@ class MapObjcet extends React.Component {
       node[target].link.map((node)=>(nextNode(num,node)))
     }
 
-    // for (let index = 0; index < prev.length; index++) {
-    //   console.log(index,'번 노드',distance[index],prev[index])
-      
-    // }
-
     // 경로찾기
     route.push(end)
     findRoute(end)
@@ -79,11 +77,12 @@ class MapObjcet extends React.Component {
   mapObjs = (inpark) =>{
     let objs =[<MapBackground style={this.props.mapStyle} mapZoom={this.props.mapZoom}/>]
     objs.push(<MapNode lot={this.props.userLot} lat={this.props.userLat} MapContainer={this.props.MapContainer} nodeChange={this.props.nodeChange} route={this.state.route} navigationMode={this.props.navigationMode} mapZoom={this.props.mapZoom}/>)
+    objs.push(<MapBuildingObject style={this.props.mapStyle} mapZoom={this.props.mapZoom} nodeChange={this.props.nodeChange} selectNode={this.props.selectNode}/>)
     if(this.props.selectNode!=null){
-      objs.push(<PlaceNoti navigationStart={this.navigationStart} navigationEnd={this.navigationEnd} node={this.props.selectNode} lot={this.props.userLot} lat={this.props.userLat} MapContainer={this.props.MapContainer}/>)
+      // objs.push(<PlaceNoti navigationStart={this.navigationStart} navigationEnd={this.navigationEnd} node={this.props.selectNode} lot={this.props.userLot} lat={this.props.userLat} MapContainer={this.props.MapContainer} mapZoom={this.props.mapZoom}/>)
     }
     if(inpark){
-      objs.push(<MyPosition lot={this.props.userLot} lat={this.props.userLat}/>)
+      objs.push(<MyPosition lot={this.props.userLot} lat={this.props.userLat} mapZoom={this.props.mapZoom}/>)
     }
     return objs
   }
@@ -123,7 +122,7 @@ class MapObjcet extends React.Component {
       if(this.props.navigationMode != prevProps.navigationMode){
         this.navigationRoute()
         if(this.props.navigationMode == 'myLocation' ){
-          let polling = setInterval(this.polling, 1000)
+          let polling = setInterval(this.polling, 2000)
           this.setState({
               pollingInterval : polling,
           },)
@@ -135,6 +134,9 @@ class MapObjcet extends React.Component {
   }
 
   componentDidMount() {
+    // console.log(this.container.current)
+    // console.log('componentDidMount')
+    this.container.current.addEventListener('touchstart', this.preventDefault)
     if(this.props.parents != 'view'){
     // AJAX 통신 마운트
     // 내부 카운터 마운트
@@ -143,6 +145,7 @@ class MapObjcet extends React.Component {
   }
 
   componentWillUnmount() {
+    this.container.current.removeEventListener('touchstart', this.preventDefault)
     // clearInterval(this.state.pollingInterval);
       if(this.props.parents != 'view'){
           // 내부 카운터 언마운트
@@ -156,18 +159,18 @@ class MapObjcet extends React.Component {
   polling = () =>{
     if(this.props.navigationMode == "myLocation"){
       this.navigationRoute()
-      console.log('테스트중',this.props.navigationMode)
     }
-      // this.setState({
-      //     polling : this.state.polling +1
-      // })
   }
 
 
   render() {
+
+    if(this.props.navigationMode == "myLocation"){
+      this.props.useGps()
+    }
     let inpark = this.inPark()
     return (
-    <div id="MapObjcet" style={{'top':this.props.top,'left':this.props.left}}>
+    <div id="MapObjcet" style={{'top':this.props.top,'left':this.props.left}}  ref={this.container} onClick={()=>this.props.nodeChange(null)}>
       {this.mapObjs(inpark)}
     </div>
     )

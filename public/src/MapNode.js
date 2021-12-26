@@ -72,16 +72,10 @@ class MapNode extends React.Component {
             <svg id="MapNode" viewBox="0 0 1000 1000" style={{'transform': 'scale('+this.props.mapZoom+')'}}>
                 {this.guideLine()}
                 {mapNode}
-         
-                {/* <line x1="10%" y1="10%" x2="80%" y2="80%" style="stroke:rgb(255,0,0);stroke-width:2" /> */}
             </svg>
             )
       }
     }
-
-  
-
-
 
     class PlaceNoti extends React.Component {
         constructor(props) {
@@ -97,30 +91,33 @@ class MapNode extends React.Component {
             let top = ((node[this.props.node].lat-this.props.MapContainer.start.lat)/this.props.MapContainer.map.lat*-1)*100
             let left = ((node[this.props.node].lot-this.props.MapContainer.start.lot)/this.props.MapContainer.map.lot*-1)*100
             return (
-                <div id="PlaceNoti" style={{top:top+'%',left:left+'%'}}>
-                    <img src={node[this.props.node].img}/>
-                    <div id="PlaceNotiInfo" >
-                        <h3> 
-                            <span>
-                            {node[this.props.node].alias}
-                            {/* ({node[this.props.node].num}) */}
-                            </span>
-                            {/* <button onClick={()=>this.props.navigationStart(node[this.props.node].num)}>
-                                출발
-                            </button>
-                            <button onClick={()=>this.props.navigationEnd(node[this.props.node].num)}>
-                                도착
-                            </button> */}
-                        </h3>
-                        {/* <p>
-                            {node[this.props.node].summary}
-               
-                        </p> */}
-                        <p>
-                            {linkNode}
-                        </p>
+                <div  id="PlaceNotiLayer" style={{'transform': 'scale('+this.props.mapZoom+')'}}>
+                    <div id="PlaceNoti" style={{top:top+'%',left:left+'%','transform': 'scale('+1/this.props.mapZoom+')'}}  onClick={(e)=>e.stopPropagation()}>
+                        <img src={node[this.props.node].img}/>
+                        <div id="PlaceNotiInfo" >
+                            <h3> 
+                                <span>
+                                {node[this.props.node].alias}
+                                {/* ({node[this.props.node].num}) */}
+                                </span>
+                                {/* <button onClick={()=>this.props.navigationStart(node[this.props.node].num)}>
+                                    건물안내
+                                </button>
+                                <button onClick={()=>this.props.navigationEnd(node[this.props.node].num)}>
+                                    길찾기
+                                </button> */}
+                            </h3>
+                            {/* <p>
+                                {node[this.props.node].summary}
+                
+                            </p> */}
+                            <p>
+                                {linkNode}
+                            </p>
+                        </div>
                     </div>
                 </div>
+                
                 )
           }
         }

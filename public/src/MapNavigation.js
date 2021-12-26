@@ -32,25 +32,25 @@ class MapNavigation extends React.Component {
         case 'sidebar':
           return(
             <div>
-              <div className="search">
+              {/* <div className="search">
                 <label for="fname"> 
                 <p>검색</p> 
                 <input placeholder="장소를 검색하세요" value={this.state.search} onChange={(e)=>this.setState({search : e.target.value})}/>
                 </label>
-              </div>
+              </div> */}
 
               <div id="navScroll">
                 <div id="mapPointList">
                   {point}
                 </div>
                       
-              <div className="mapPoint" onClick={()=>this.setState({nav : 'test'})}>
+              {/* <div className="mapPoint" onClick={()=>this.setState({nav : 'test'})}>
                 <div className="pointInfo">
                   <h3>테스트모드1</h3>
                   <p>테스트 모드로 진입합니다.</p>
                 </div>
               </div> 
-              
+               */}
 
               </div>
             </div>
@@ -126,22 +126,22 @@ class MapNavigation extends React.Component {
 
 
         switch (this.state.mode) {
-          case 'test':
-            return(
-            <div div className="mapPoint mapTransition" onClick={()=>this.props.nodeChange(this.props.node.num)}>
-              <img src={this.props.node.img}/>
-              <div className="poinㄴtInfo">
-                <div className="pointheader">
-                  <h3>{this.props.node.alias}</h3>
-                  <span>
-                    <button onClick={()=>this.setState({mode:'nav'})}>길찾기</button>
-                    <button onClick={()=>this.setState({mode:'more'})}>더보기</button>
-                  </span>
-                </div>
-                <p>{this.props.node.summary}</p>
-            </div>
-            </div>
-            )
+          // case 'test':
+          //   return(
+          //   <div div className="mapPoint mapTransition" onClick={()=>this.props.nodeChange(this.props.node.num)}>
+          //     <img src={this.props.node.img}/>
+          //     <div className="pointInfo">
+          //       <div className="pointheader">
+          //         <h3>{this.props.node.alias}</h3>
+          //         <span>
+          //           <button onClick={()=>this.setState({mode:'nav'})}>길찾기</button>
+          //           <button onClick={()=>this.setState({mode:'more'})}>더보기</button>
+          //         </span>
+          //       </div>
+          //       <p>{this.props.node.summary}</p>
+          //   </div>
+          //   </div>
+          //   )
           case 'info':
             return(
      
@@ -155,8 +155,8 @@ class MapNavigation extends React.Component {
               </div>
               <div className="PlaceButton">
                 {/* <button className="router" onClick={()=>this.setState({mode:'more'})}><p>건물안내</p></button> */}
-                <button className="router" onClick={(e)=>this.more(e)}><p>건물안내</p></button>
-                <button className="more" onClick={(e)=>this.route(e)}><p>길찾기</p></button>
+                <button className="more" onClick={(e)=>this.more(e)}><p>건물안내</p></button>
+                <button className="router" onClick={(e)=>this.route(e)}><p>길찾기</p></button>
           
               </div>
             </div>
@@ -192,8 +192,8 @@ class MapNavigation extends React.Component {
               </div>
               <div className="PlaceButton">
                 {/* <button className="router" onClick={()=>this.setState({mode:'more'})}><p>건물안내</p></button> */}
-                <button className="router" onClick={(e)=>this.more(e)}><p>건물안내</p></button>
-              <button className="more" onClick={(e)=>this.back(e)}><p>뒤로</p></button>
+                <button className="more" onClick={(e)=>this.more(e)}><p>건물안내</p></button>
+              <button className="router" onClick={(e)=>this.back(e)}><p>뒤로</p></button>
                 {/* <button className="router" onClick={()=>this.setState({mode:'more'})}><p>더보기</p></button> */}
               </div>
             </div>

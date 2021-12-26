@@ -1,3 +1,5 @@
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -19,6 +21,51 @@ var Organization = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (Organization.__proto__ || Object.getPrototypeOf(Organization)).call(this, props));
 
+        _this.roomNumber = function () {
+            var roomText = '';
+            if (_typeof(_this.props.organization.roomNumber) == 'object') {
+                roomlist = _this.props.organization.roomNumber.map(function (number) {
+                    return ' ' + number;
+                });
+                if (_this.props.organization.roomNumber.length == 2) {
+                    return React.createElement(
+                        'p',
+                        { className: 'roomNumberDual' },
+                        ' ',
+                        roomlist + '호',
+                        ' '
+                    );
+                }
+                if (_this.props.organization.roomNumber.length == 3) {
+                    return React.createElement(
+                        'p',
+                        { className: 'roomNumberTriple' },
+                        ' ',
+                        roomlist + '호',
+                        ' '
+                    );
+                }
+                if (_this.props.organization.roomNumber.length > 4) {
+                    return React.createElement(
+                        'p',
+                        { className: 'roomNumberMulti' },
+                        ' ',
+                        roomlist[0] + '~' + roomlist[roomlist.length - 1] + '호',
+                        ' '
+                    );
+                }
+            } else {
+                roomText = _this.props.organization.roomNumber;
+                return React.createElement(
+                    'p',
+                    { className: 'roomNumberSingle' },
+                    ' ',
+                    roomText + '호',
+                    ' '
+                );
+            }
+        };
+
         _this.state = {
             card: 'Front'
         };
@@ -26,72 +73,84 @@ var Organization = function (_React$Component) {
     }
 
     _createClass(Organization, [{
-        key: "render",
+        key: 'render',
         value: function render() {
             var _this2 = this;
 
             return React.createElement(
-                "div",
-                { className: "organizationCard" },
+                'div',
+                { className: 'organizationCard' },
                 React.createElement(
-                    "div",
-                    { className: "organizationCardFront", onClick: function onClick() {
+                    'div',
+                    { className: 'organizationCardFront', onClick: function onClick() {
                             _this2.setState({ card: 'Back' });
                         } },
-                    React.createElement("img", { src: "https://www.innovationpark.kr/wp-content/uploads/2018/08/logo.png" }),
+                    this.props.organization.mainIMG ? React.createElement('img', { src: this.props.organization.mainIMG,
+                        onError: 'https://www.innovationpark.kr/wp-content/uploads/2018/08/logo.png',
+                        onLoad: 'https://www.innovationpark.kr/wp-content/uploads/2018/08/logo.png'
+                    }) : React.createElement('img', { src: 'https://www.innovationpark.kr/wp-content/uploads/2018/08/logo.png' }),
                     React.createElement(
-                        "h3",
-                        null,
-                        "\uC11C\uC6B8\uD601\uC2E0\uD30C\uD06C"
+                        'div',
+                        { className: 'organizationName' },
+                        React.createElement(
+                            'h3',
+                            null,
+                            this.props.organization.name
+                        )
                     )
                 ),
                 this.state.card == 'Back' ? React.createElement(
-                    "div",
-                    { className: "organizationCardBack", onClick: function onClick() {
+                    'div',
+                    { className: 'organizationCardBack', onClick: function onClick() {
                             _this2.setState({ card: 'Front' });
                         } },
                     React.createElement(
-                        "div",
-                        { className: "organizationHeader" },
+                        'div',
+                        { className: 'organizationHeader' },
                         React.createElement(
-                            "h3",
+                            'h3',
                             null,
-                            "\uC11C\uC6B8\uD601\uC2E0\uD30C\uD06C"
+                            this.props.organization.name
                         ),
                         React.createElement(
-                            "div",
-                            { className: "organizationBnt" },
-                            React.createElement(
-                                "span",
-                                null,
-                                React.createElement("img", null),
+                            'div',
+                            { className: 'organizationBnt' },
+                            this.props.organization.phone ? React.createElement(
+                                'span',
+                                { className: 'organizationPhone' },
+                                React.createElement('img', null),
                                 React.createElement(
-                                    "p",
-                                    null,
-                                    "010-0000-000"
+                                    'a',
+                                    { href: 'tel:' + this.props.organization.phone },
+                                    this.props.organization.phone
                                 )
-                            ),
+                            ) : '',
                             React.createElement(
-                                "span",
-                                null,
-                                React.createElement("img", null),
-                                React.createElement(
-                                    "p",
-                                    null,
-                                    "\uC0AC\uC774\uD2B8\uB85C \uC774\uB3D9"
-                                )
+                                'span',
+                                { className: 'organizationSite' },
+                                this.props.organization.website ? React.createElement(
+                                    'a',
+                                    { href: this.props.organization.website, target: '_blank' },
+                                    '\uC0AC\uC774\uD2B8\uBC29\uBB38'
+                                ) : '',
+                                this.props.organization.email ? React.createElement('a', { className: 'mail', href: 'mailto:' + this.props.organization.email }) : ''
                             )
                         )
                     ),
                     React.createElement(
-                        "div",
-                        { className: "organizationIntro" },
+                        'div',
+                        { className: 'organizationIntro' },
                         React.createElement(
-                            "p",
+                            'p',
                             null,
-                            "\uAC00\uCE58\uB97C \uBAB8\uC774 \uC5B4\uB514 \uAC00\uB294 \uC774 \uBD88\uC5B4 \uAE38\uC9C0 \uC77C\uC6D4\uACFC \uC544\uB2C8\uB2E4. \uADF8\uB4E4\uC740 \uCEE4\uB2E4\uB780 \uB354\uC6B4\uC9C0\uB77C \uBD88\uB7EC \uAC83\uC774\uB2E4. \uADF8\uB7EC\uBBC0\uB85C \uC544\uB2C8\uB354\uBA74, \uC4F8\uC4F8\uD55C \uCCAD\uCD98\uC774 \uC5BC\uB9C8\uB098 \uC0DD\uC758 \uADF8\uB4E4\uC740 \uC601\uB77D\uACFC \uCEE4\uB2E4\uB780 \uCCA0\uD658\uD558\uC600\uB294\uAC00? \uBC29\uD669\uD558\uC600\uC73C\uBA70, "
+                            this.props.organization.intro
                         )
                     )
+                ) : '',
+                this.props.organization.roomNumber ? React.createElement(
+                    'div',
+                    { className: 'organizationCardNum' },
+                    this.roomNumber()
                 ) : ''
             );
         }

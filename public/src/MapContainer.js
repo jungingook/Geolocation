@@ -13,6 +13,8 @@ class MapContainer extends React.Component {
       mapTouchStart : null,
       mapPositionX : 54,
       mapPositionY : -33,
+      touchMode : null,
+      ZoomStart : [0,0],
       tempPositionX : 0,
       tempPositionY : 0,
       mapStyle : 'normal',
@@ -20,20 +22,35 @@ class MapContainer extends React.Component {
       nearNode : null,
       targetNode : null,
       navigationMode : null,
+      useGps : '',
       mapZoom : 2,
+      tempZoom : 1,
       containerMode :'map', 
+      testText : '테스트3',
     };
   }
 
-  componentDidMount() {
-    this.container.current.addEventListener('touchstart', this.preventDefault)
+  useGps = () => {
+
+    navigator.geolocation.getCurrentPosition(position => {
+      const { accuracy, latitude, longitude, altitude, altitudeAccuracy, heading } = position.coords;
+      let nearNode = this.nearNode(latitude,longitude)
+      this.setState({
+        lat : latitude,
+        lot : longitude,
+        acc : accuracy,
+        heading : heading,
+        alt : altitude,
+        altAcc:altitudeAccuracy,
+        lot : longitude,
+        nearNode : nearNode
+      })
+      // Show a map centered at latitude / longitude.
+    },error => {
+      
+    },{enableHighAccuracy:false});
+
   }
-
-  componentWillUnmount() {
-    this.container.current.addEventListener('touchstart', this.preventDefault)
-  }
-
-
 
 
   mapChange = (value) =>{
@@ -69,9 +86,9 @@ class MapContainer extends React.Component {
   }
 
   nodeChange = (num=null) =>{
-
-
+    console.log(num)
     if(num){
+      console.log(num)
       this.setState({
         selectNode : num,
       })
@@ -83,6 +100,7 @@ class MapContainer extends React.Component {
     }
 
   }
+
   targetNodeChange = (num=null,mode=null) =>{
     this.setState({
       targetNode : num,
@@ -91,24 +109,28 @@ class MapContainer extends React.Component {
   }
 
   onTouchStart = (e) => {
-
-    //console.log('onTouchStart',e.touches[0].pageX,e.touches[0].pageY,this.state.mapPositionX,this.state.mapPositionY)
+    // 터치 드레그
     if(e.touches.length==1){
-    this.setState({
-      mapTouchStart : e.touches[0],
-    })
-    //e.preventDefault()
+      this.setState({
+        mapTouchStart : e.touches[0],
+        touchMode : 'TouchDrag',
+      })
+    }
+    else if(e.touches.length<=2){
+      this.setState({
+        ZoomStart : [e.touches[0],e.touches[1]],
+        touchMode : 'Pinches',
+      })
+    }
   }
-    // alert('테스트')
-    
-  }
+
   onTouch = (e) => {
-   
-    // console.log('onTouch',e.touches[0].pageX - this.state.mapDragStart.pageX,e.touches[0].pageY - this.state.mapDragStart.pageY)
-    // console.log('onTouch',e.touches[0].pageX,e.touches[0].pageY)
+    // console.log(e.touches,'onTouch2',this.state.touchMode)
+    // 터치 드레그
+
     if(e.touches.length==1){
       try {
-        if(e.pageX!=0 && e.pageY!=0){
+        if(e.pageX!=0 && e.pageY!=0&&this.state.touchMode=='TouchDrag'){
           let moveX = e.touches[0].pageX - this.state.mapTouchStart.pageX 
           let moveY = e.touches[0].pageY - this.state.mapTouchStart.pageY
           if(this.state.tempPositionX!=moveX||this.state.tempPositionY!=moveY){
@@ -117,7 +139,33 @@ class MapContainer extends React.Component {
               tempPositionY : moveY,
             })
           }
+        }
+      } catch (error) {
+        
       }
+    }
+    // 핀치 투 줌
+    else if(e.touches.length<=2&&this.state.touchMode=='Pinches'){
+
+      try {
+
+        let startPointX = Math.abs(this.state.ZoomStart[0].pageX - this.state.ZoomStart[1].pageX)
+        let startPointY = Math.abs(this.state.ZoomStart[0].pageY - this.state.ZoomStart[1].pageY)
+
+        let nowPointX = Math.abs(e.touches[0].pageX - e.touches[1].pageX)
+        let nowPointY = Math.abs(e.touches[0].pageY - e.touches[1].pageY)
+
+        let startSqrt = Math.sqrt(startPointX*startPointX+startPointY*startPointY)
+
+        let notSqrt = Math.sqrt(nowPointX*nowPointX+nowPointY*nowPointY)
+
+
+        
+        this.setState({
+          testText : '터치배율'+(notSqrt/startSqrt)+'줌'+this.state.mapZoom,
+          tempZoom : notSqrt/startSqrt
+        })
+
       } catch (error) {
         
       }
@@ -125,9 +173,8 @@ class MapContainer extends React.Component {
   }
 
   onTouchEnd = (e) => {
-    //e.preventDefault()
-    //console.log('onTouchEnd',e.touches)
-     // console.log(this.state.mapPositionX+this.state.tempPositionX,this.state.mapPositionY+this.state.tempPositionY)
+    // 터치 드레그
+    if(this.state.touchMode=='TouchDrag'){
       try {
         this.setState({
           tempPositionY : 0,
@@ -140,7 +187,11 @@ class MapContainer extends React.Component {
       } catch (error) {
         
       }
-    
+    }
+    // 핀치 투 줌
+    else if(this.state.touchMode=='Pinches'){
+      this.zoomControl(this.state.mapZoom*(this.state.tempZoom))
+    }
   }
 
   mapDrag = (e) =>{
@@ -154,13 +205,12 @@ class MapContainer extends React.Component {
           tempPositionY : moveY,
         })
       }
-    
     }
-
     } catch (error) {
       
     }
   }
+  
   mapDragStart = (e) =>{
     let img = document.createElement("img");
     img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
@@ -182,20 +232,26 @@ class MapContainer extends React.Component {
     } catch (error) {
       
     }
-   
   }
 
-
   zoomControl = (zoom,option=null) =>{
-
-    if(zoom >= 3){
-      zoom = 3
-    }else if (zoom <= 1.75){
-      zoom = 1.75
+    if(zoom >= 5){
+      zoom = 5
+    }else if (zoom <= 1){
+      zoom = 1
     }
-    this.setState({
-      mapZoom : zoom
-    })
+    if (option == null){
+      this.setState({
+        mapZoom : zoom,
+        tempZoom : 1,
+        testText : '줌 : '+zoom,
+        
+      })
+    } else if (option == 'return'){
+    
+      return zoom
+    }
+
   }
 
   positionControl = (mapPosition,tempPosition) => {
@@ -224,7 +280,8 @@ class MapContainer extends React.Component {
         return(
           <div id="MapMain"
           tabIndex={0} draggable="true" 
-          ref={this.container}
+
+          // onClick={(e)=>this.state}
           onDragOver={(e)=>this.mapDrag(e)} 
           onDragStart={(e) => this.mapDragStart(e)} 
           onDragEnd={(e) => this.mapDragEnd(e)} 
@@ -237,7 +294,7 @@ class MapContainer extends React.Component {
             MapContainer={this.props.MapContainer} 
             top={this.positionControl(this.state.mapPositionY,this.state.tempPositionY)}  //773
             left={this.positionControl(this.state.mapPositionX,this.state.tempPositionX)}  //773
-            mapZoom={this.state.mapZoom} 
+            mapZoom={this.zoomControl(this.state.mapZoom*this.state.tempZoom,'return')} 
             userLat={userLat} 
             userLot={userLot} 
             container={this.container.current} 
@@ -248,12 +305,15 @@ class MapContainer extends React.Component {
             selectNode={this.state.selectNode}
             introBuilding={this.state.introBuilding}
             introBuildingChange={this.introBuildingChange}
-            navigationMode={this.state.navigationMode}/>
+            navigationMode={this.state.navigationMode}
+            useGps = {this.useGps}
+            />
   
             <MapController
             mapZoom={this.state.mapZoom} 
             zoomControl={this.zoomControl}
             tempMmode={this.containerModeChange}
+            testText={this.state.testText}
             />
         </div>
         )
@@ -286,33 +346,18 @@ class MapContainer extends React.Component {
     })
   }
 
+  
+
 
   render() {
-    navigator.geolocation.getCurrentPosition(position => {
-      const { accuracy, latitude, longitude, altitude, altitudeAccuracy, heading } = position.coords;
-      let nearNode = this.nearNode(latitude,longitude)
-  
-      this.setState({
-        lat : latitude,
-        lot : longitude,
-        acc : accuracy,
-        heading : heading,
-        alt : altitude,
-        altAcc:altitudeAccuracy,
-        lot : longitude,
-        nearNode : nearNode
-      })
-      // Show a map centered at latitude / longitude.
-    },error => {
-      
-    },{enableHighAccuracy:true});
+
   
     let userLat = (this.state.lat-this.props.MapContainer.start.lat)/this.props.MapContainer.map.lat*-1
     let userLot = (this.state.lot-this.props.MapContainer.start.lot)/this.props.MapContainer.map.lot*-1
     return (
          <div id="MapContainer" >
            {this.containerMode(this.state.containerMode)}
-          <div id="MapSide">
+          <div id="MapSide" className={(this.state.containerMode=='building'?'MapNavigationHide':'')}>
             <MapNavigation
               state={this.state}
               userLat={userLat}
@@ -355,6 +400,18 @@ MapContainer.defaultProps = {
 
 class MapController extends React.Component {
   
+
+    
+  constructor(props) {
+    super(props);
+    this.container = React.createRef();
+    this.preventDefault = (e) => {e.preventDefault()}
+    this.state = { 
+
+    };
+  }
+
+
   zoomButton = (option) => {
     let zoom = 1
     switch (option) {
@@ -372,18 +429,18 @@ class MapController extends React.Component {
   }
 
 
-
   render() {
       return (
-          <div id="MapController">
+          <div id="MapController"  ref={this.container}>
             <div id="ZoomController">
-              <button onClick={()=>this.zoomButton('plus')}>
+              <button onClick={()=>this.zoomButton('plus')} onTouch={()=>this.zoomButton('plus')}>
                 +
               </button>
-              <button onClick={()=>this.zoomButton('minus')}>
+              <button onClick={()=>this.zoomButton('minus')} onTouch={()=>this.zoomButton('minus')}>
                 -
               </button>
-{/* 
+
+{/*       
               <button onClick={()=>this.props.tempMmode('building')}>
                 상세맵(새화면)
               </button>
@@ -391,6 +448,7 @@ class MapController extends React.Component {
                 상세맵(화면변경)
               </button> */}
             </div>
+            {/* <p id="TestText" >{this.props.testText}</p> */}
           </div>
           )
     }

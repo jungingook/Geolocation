@@ -67,6 +67,12 @@
 }
 
 
+#MapFrame {
+    display: flex;
+    justify-content: center;
+    margin: 100px 0px;
+}
+
 #MapContainer{
     max-width: 1200px;
     max-height: 968px;
@@ -91,6 +97,9 @@
     background-color: #E3DCC2;
     position: relative;
     overflow: hidden;
+}
+#MapMain:active{
+    cursor: move;
 }
 #MapSide{
     width: 100vw;
@@ -118,7 +127,8 @@
     max-height: 768px;
     position: absolute;
     z-index: 10;
-  
+    border-radius: 10px;
+    pointer-events: none;
 }
 #ZoomController{
     width: 30px;
@@ -131,6 +141,7 @@
     justify-content: space-between;
 }
 #ZoomController button{
+    pointer-events: auto;
     width: 30px;
     height: 30px;
     font-size: 25px;
@@ -139,6 +150,14 @@
     border: none;
     border-radius: 5px;
     box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15), 0 6px 6px rgba(0, 0, 0, 0.3);
+}
+#MapController #TestText {
+    position: absolute;
+    margin: auto;
+    top: 0%;
+    right: 0%;
+    z-index: 50;
+    height: 50px;
 }
 
 #MapNavigation{
@@ -233,7 +252,7 @@
     margin: 10px 0px;
 }
 .mapTransition {
-    transition: all 0.3s;
+    /* transition: all 0.3s; */
 }
 
 .mapRouter{
@@ -259,6 +278,13 @@
     padding: 0px;
     flex-direction: column;
     justify-content: space-around;
+    background-color: #ffffff !important;
+    color: black;
+
+}
+.more{
+    background-color: #ffffffcc !important;
+    color: black;
 }
 .router .list{
     height: 20px;
@@ -281,24 +307,28 @@
     background-size: 70% 70%;
     background-position: center center;
     background-repeat: no-repeat;
+    background-color: white;
 }
 .RouteCard .routerButton .routerImgFront{ 
     background-image:  url('src/Front.svg');
     background-size: 70% 70%;
     background-position: center center;
     background-repeat: no-repeat;
+    background-color: white;
 }
 .RouteCard .routerButton .routerImgBack{ 
     background-image:  url('src/back.svg');
     background-size: 70% 70%;
     background-position: center center;
     background-repeat: no-repeat;
+    background-color: white;
 }
 .RouteCard .routerButton .routerImgSubway{ 
     background-image:  url('src/subway.svg');
     background-size: 70% 70%;
     background-position: center center;
     background-repeat: no-repeat;
+    background-color: white;
 }
 
 @media screen and (min-width: 1200px) { 
@@ -348,7 +378,7 @@
 
     #navScroll{
         width: 100%;
-        height: 708px;
+        height: 768px;
         overflow-y: scroll;
         overflow-x: hidden;
     }
@@ -425,6 +455,7 @@
     .PlaceTitle{
         background-color:  rgb(0, 26, 113);
         width: 200px;
+        height: 50px;
         text-align: center;
         border-radius: 0px 5px 0px 5px;
         font-family: 'Pretendard-Regular';
@@ -449,7 +480,7 @@
         border: 0px;
         padding: 0px 10px;
         border-radius: 5px;
-        background-color: white;
+        background-color: #ffffff;
         box-shadow: 0 35px 25px rgba(0, 0, 0, 0.05), 0 5px 5px rgba(0, 0, 0, 0.3);
         display: flex;
         transition: transform 0.2s;
@@ -514,6 +545,8 @@
     .RouteCard .PlaceTitle{
         background-color:  rgb(0, 26, 113);
         width: 200px;
+        height: 40px;
+        line-height: 40px;
         text-align: center;
         border-radius: 5px 0px 5px 0px;
         font-family: 'Pretendard-Regular';
@@ -524,6 +557,8 @@
     } 
     .RouteCard .routerNoti{
         margin: 10px 10px 0px ;
+        line-height: 18px;
+        height: 18px;
     }
     .RouteCard .routerlist{
         padding: 0px;
@@ -671,6 +706,9 @@
     .search{
        display: none;
     }
+    #MapSide.MapNavigationHide{
+        display: none;
+    }
     /* .PlaceCard{
         width: 500px;
         height: 140px;
@@ -752,7 +790,6 @@
         border: 0px;
         padding: 0px;
         border-radius: 5px;
-        background-color: white;
         box-shadow: 0 35px 25px rgba(0, 0, 0, 0.05), 0 5px 5px rgba(0, 0, 0, 0.3);
         display: flex;
         transition: transform 0.2s;
@@ -970,8 +1007,11 @@
 
 
 .map1{
-    /* background-image: url('src/mapImg.png'); */
-    background-image: url('src/mapTest.png');
+    /* background-image: url('src/mapTest2.jpeg'); */
+    background-image: url('src/map-ground.svg');
+    position: absolute;
+    top: -10px;
+    left: -17px;
 }
 .map2{
     background-image: url('src/map3.jpg');
@@ -987,15 +1027,22 @@
     position: absolute;
     transition: transform 0.3s;
 }
+#MyPositionLayer{
+    width: 100vw;
+    height: 100vw;
+    max-width: 768px;
+    max-height: 768px;
+    z-index: 3;
+    position: absolute;
+}
 #MyPosition{
     /* top:39%;
     left:48%; */
-   width: 20px;
-   height: 20px;
+   width: 15px;
+   height: 15px;
    background-color: tomato;
    border-radius: 20px;
    box-shadow: 0px 0px 5px #999;
-   z-index: 3;
    position: absolute;
 }
 
@@ -1006,21 +1053,27 @@
     position: absolute;
     transition: transform 0.3s;
 }
+#placeGuide{
+
+}
 #PlaceNoti{
     width: 300px;
     height: 200px;
     border-radius: 5px;
     overflow: hidden;
     z-index: 10;
-    position: absolute;
+    /* position: absolute; */
     box-shadow: 0 10px 35px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.1);
     /* display: flex; */
     background-color: rgb(0, 26, 113);
-    transform: translate(-150px, -210px);
+    transform: translate(-100px, -200px);
+    transition: transform 0.3s;
+}
+.unSelectNode #PlaceNoti{
+    display: none;
 }
 #PlaceNotiInfo{
     height: 50px;
-
 }
 #PlaceNoti img{
     width: 300px;
@@ -1062,6 +1115,178 @@
 }
 
 /* 빌딩 상세정보 */
+
+#MapBuildingObject{
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    position: absolute;
+    transition: transform 0.3s;
+}
+#MapBuildingObject div{
+    background-repeat: no-repeat;
+    position: absolute;
+    filter: opacity(1);
+}
+
+#MapBuildingObject div .test1{
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: -100px;
+    background-color: red;
+}
+
+#MapBuildingObject div:hover{
+    filter: opacity(1) drop-shadow(2px 2px 1px white);
+    /* filter: drop-shadow(1px 1px 1px red); */
+    /* border: 2px solid red; */
+}
+
+#MapBuildingObject div.selectNode{
+    z-index: 999 !important;
+}
+
+#Building25{
+    top: 64%;
+    left: 43.7%;
+    width: 8%;
+    height: 8%;
+    z-index: 16;
+    background-image:  url('src/map-25.svg');
+}
+#Building24{
+    top: 37%;
+    left: 41.4%;
+    width: 5%;
+    height: 4%;
+    z-index: 13;
+    background-image: url(src/map-24.svg);
+}
+#Building18{
+    top: 66.3%;
+    left: 50.1%;
+    width: 8%;
+    height: 8%;
+    z-index: 15;
+    background-image:  url('src/map-18.svg');
+}
+#Building27{
+    top: 57.8%;
+    left: 51%;
+    width: 4%;
+    height: 4%;
+    z-index: 14;
+    background-image:  url('src/map-27.svg');
+}
+#Building17{
+    top: 60%;
+    left: 53.8%;
+    width: 14%;
+    height: 14%;
+    z-index: 13;
+    background-image:  url('src/map-17.svg');
+}
+#Building11{
+    top: 56.4%;
+    left: 56.9%;
+    width: 6%;
+    height: 6%;
+    z-index: 12;
+    background-image:  url('src/map-11.svg');
+}
+#Building20{
+    top: 50.5%;
+    left: 54.4%;
+    width: 7.5%;
+    height: 8.5%;
+    z-index: 11;
+    background-image: url(src/map-20.svg);
+}
+#Building16{
+    top: 43.8%;
+    left: 59%;
+    width: 15%;
+    height: 14%;
+    z-index: 10;
+    background-image: url(src/map-16.svg);
+}
+#Building21{
+    top: 43.4%;
+    left: 56%;
+    width: 6%;
+    height: 6%;
+    z-index: 9;
+    background-image: url(src/map-21.svg);
+}
+#Building10{
+    top: 36%;
+    left: 51.5%;
+    width: 5%;
+    height: 5%;
+    z-index: 8;
+    background-image: url(src/map-10.svg);
+}
+#Building14{
+    top: 35%;
+    left: 47.5%;
+    width: 4.5%;
+    height: 4.5%;
+    z-index: 7;
+    background-image: url(src/map-14.svg);
+}
+#Building15{
+    top: 37.8%;
+    left: 41.8%;
+    width: 13%;
+    height: 19%;
+    z-index: 6;
+    background-image: url(src/map-15.svg);
+}
+#Building12{
+    top: -461px;
+    left: 319px;
+    width: 5%;
+    height: 5%;
+    z-index: 5;
+    background-image:  url('src/map-12.svg');
+}
+#Building13{
+    top: 37%;
+    left: 38%;
+    width: 4%;
+    height: 5%;
+    z-index: 4;
+    background-image: url(src/map-13.svg);
+}
+#Building22{
+    top: 37%;
+    left: 34.1%;
+    width: 3.5%;
+    height: 4%;
+    z-index: 3;
+    background-image: url(src/map-22.svg);
+}
+#Building26{
+    top: 40%;
+    left: 29.4%;
+    width: 8%;
+    height: 11%;
+    z-index: 16;
+    background-image: url(src/map-26.svg);
+}
+#Building23{
+    top: 42.9%;
+    left: 23.7%;
+    width: 8%;
+    height: 8%;
+    z-index: 1;
+    background-image: url(src/map-23.svg);
+}
+
+#BuildingMain{
+    
+}
 #BuildingIntro{
     width: 100vw;
     height: 100vw;
@@ -1087,14 +1312,18 @@
 }
 
 #BuildingIntro #IntroHeader #IntroText{
+    color: white;
     transition: all 0.5s;
 }
 
 #BuildingIntro #IntroHeader #IntroText h2{
+    color: white;
     transition: all 0.5s;
+    font-family: 'Pretendard-Bold';
 }
 
 #BuildingIntro #IntroHeader #IntroText p{
+    color: white;
     transition: all 0.5s;
 }
 
@@ -1109,6 +1338,7 @@
 }
 #BuildingIntro #IntroHeader #IntroControl #controlZone #MoveMap p{
     transition: all 0.5s;
+    fill:#FFFFFF;
 }
 
 #BuildingIntro .IntroHeaderBig{
@@ -1158,11 +1388,13 @@
     margin: 10px 30px;
     padding: 0;
     font-size: 50px;
+    color: white;
 }
 
 #BuildingIntro .IntroHeaderBig #IntroText p{
     margin: 10px 30px;
     padding: 0;
+    color: white;
 }
 
 #BuildingIntro .IntroHeaderBig #IntroControl{
@@ -1181,17 +1413,15 @@
     justify-content: flex-end;
 }
 #BuildingIntro .IntroHeaderBig #IntroControl #controlZone #MoveMap{
-    width: 70px;
+    width: 30px;
     height: 30px;
     background-color: white;
     border-radius: 50px;
     line-height: 30px;
 }
-#BuildingIntro .IntroHeaderBig #IntroControl #controlZone #MoveMap p{
-    margin: 0px;
-    padding: 0px;
-    text-align: center;
-    line-height: 30px;
+#BuildingIntro .IntroHeaderBig #IntroControl #controlZone #MoveMap:hover{
+    fill: white; 
+    background-color: rgb(0, 26, 113);
 }
 
 /* 축소시 */
@@ -1265,19 +1495,16 @@
     justify-content: flex-end;
 }
 #BuildingIntro .IntroHeaderSmall #IntroControl #controlZone #MoveMap{
-    width: 70px;
+    width: 30px;
     height: 30px;
     background-color: white;
     border-radius: 50px;
     line-height: 30px;
 }
-#BuildingIntro .IntroHeaderSmall #IntroControl #controlZone #MoveMap p{
-    margin: 0px;
-    padding: 0px;
-    text-align: center;
-    line-height: 30px;
+#BuildingIntro .IntroHeaderSmall #IntroControl #controlZone #MoveMap:hover{
+    fill: white; 
+    background-color: rgb(0, 26, 113);
 }
-
 #IntroBody{
     width: 100%;
     flex: 1;
@@ -1302,7 +1529,7 @@
 }
 
 #BuildingIntro .minititle{
-    font-family: 'Pretendard-SemiBold';
+    font-family: 'Pretendard-Bold';
     display: flex;
     color: rgb(0, 26, 113);
 }
@@ -1312,6 +1539,35 @@
     background-color: rgb(0, 26, 113);
     display: flex;
     margin-right: 10px;
+}
+#BuildingIntro #OrganizationInfo  #OrganizationInfoHeader{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+}
+#BuildingIntro #OrganizationInfo  #OrganizationInfoHeader #BuildingFloor{
+    display: flex;
+    margin-right: 18px;
+    flex-wrap: wrap;
+}
+
+#BuildingIntro #OrganizationInfo  #OrganizationInfoHeader button{
+    width: 50px;
+    height: 30px;
+    border-radius: 10px;
+    margin: 1em 0em 1em 0.5em;
+    border : none;
+    background-color: white;
+    color: black;
+    font-family: 'Pretendard-Bold';
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s, color 0.3s;;
+}
+
+#BuildingIntro #OrganizationInfo  #OrganizationInfoHeader button.select{
+    background-color: rgb(0, 26, 113);
+    color: white;
 }
 
 #BuildingIntro #OrganizationInfo #OrganizationList{
@@ -1329,7 +1585,7 @@
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 10px 35px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+    /* overflow: hidden; */
     position: relative;
 }
 
@@ -1354,26 +1610,41 @@
     width: 100px;
     padding: 34px;
     object-fit: scale-down;
+    box-sizing: content-box;
 }
-#BuildingIntro #OrganizationInfo #OrganizationList .organizationCard .organizationCardFront h3{
+#BuildingIntro #OrganizationInfo #OrganizationList .organizationCard .organizationCardFront .organizationName{
     display: flex;
     height: 168px;
     width: 168px;
+    flex-wrap: wrap;
     font-family: 'Pretendard-Bold';
     color: rgb(0, 26, 113);
     flex-direction: column;
     justify-content: center;
     text-align: center;
     margin: 0px;
+    word-wrap :break-word;
+    word-break:normal;
 }
-
-
+#BuildingIntro #OrganizationInfo #OrganizationList .organizationCard .organizationCardFront .organizationName h3{
+    word-break: keep-all;
+    padding: 0px 10px;
+    font-family: 'Pretendard-Bold';
+    color: rgb(0, 26, 113);
+    font-size: 18px;
+    text-align: center;
+    margin: 0px;
+    word-wrap: break-word;
+    /* word-break: normal; */
+}
 
 #BuildingIntro #OrganizationInfo #OrganizationList .organizationCard .organizationCardBack{
     width: 100%;
     height: 168px;
     position: absolute;
     z-index: 1;
+    overflow: hidden;
+    border-radius: 10px;
     background-color: rgba(255, 255, 255, .9);
     animation-name: organizationCard;
     animation-duration: 0.3s;
@@ -1419,26 +1690,50 @@
 
 #BuildingIntro #OrganizationInfo #OrganizationList .organizationCard .organizationCardBack .organizationHeader h3{
     width: 100%;
-    margin: 0px;
-    text-align: center;
+    margin: 0px 20px;
+    text-align: left;
     height: 40px;
     line-height: 40px;
+    font-family: 'Pretendard-Bold';
+    color: rgb(0, 26, 113);
 }
 
 
 #BuildingIntro #OrganizationInfo #OrganizationList .organizationCard .organizationCardBack .organizationHeader .organizationBnt{
     display: flex;
-    width: 100%;
+    width: calc( 100% - 40px );
+    margin: 0px 20px;
+    justify-content: space-between;
+    box-sizing: border-box;
 }
 #BuildingIntro #OrganizationInfo #OrganizationList .organizationCard .organizationCardBack .organizationHeader .organizationBnt p{
     margin: 0px;
-    padding: 5px 10px;
-    height: 20px;
+    width: 100%;
+    /* padding: 5px 10px;
+    height: 20px; */
 }
 
+.organizationPhone{
+    text-align: left;
+}
+.organizationSite{
+    text-align: left;
+}
+.organizationSite a{
+    margin-right: 10px ;
+}
+.organizationSite .mail{
+    width: 19px;
+    height: 19px;
+    background-image:  url('src/mailIcon.png');
+    background-position: center center;
+    background-size: 90% 90%;
+    background-repeat: no-repeat;
+}
 #BuildingIntro #OrganizationInfo #OrganizationList .organizationCard .organizationCardBack span{
-    margin: 0px 20px;
+    margin: 0px;
     display: flex;
+    width: 50%;
     /* border-radius: 5px; */
     /* box-shadow: 0 10px 35px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.1); */
 }
@@ -1456,16 +1751,369 @@
 #BuildingIntro #OrganizationInfo #OrganizationList .organizationCard .organizationCardBack .organizationIntro p{
     margin: 10px 20px;
     padding: 0px;
-    height: 80px;
-    
+    height: 77px;
+    text-overflow : ellipsis;
+    word-break: keep-all;
+    overflow: hidden;
+}
+
+
+#BuildingIntro #OrganizationInfo #OrganizationList .organizationCard .organizationCardNum{
+    display: flex;
+    height: 60px;
+    width:  60px;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    border-radius: 50px;
+    z-index: 2;
+    background-color: rgb(0, 26, 113);
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.1);
+    right: -10px;
+    top: -10px;
+    text-align: center;
+    color:white;
+    /* line-height: 60px; */
+    font-family: 'Pretendard-SemiBold';
+}
+#BuildingIntro #OrganizationInfo #OrganizationList .organizationCard .organizationCardNum p{
+
+}
+#BuildingIntro #OrganizationInfo #OrganizationList .organizationCard .organizationCardNum .roomNumberSingle{
+    /* line-height: 60px; */
+    font-size: 16px;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+#BuildingIntro #OrganizationInfo #OrganizationList .organizationCard .organizationCardNum .roomNumberDual{
+    font-size: 16px;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+#BuildingIntro #OrganizationInfo #OrganizationList .organizationCard .organizationCardNum .roomNumberTriple{
+    /* line-height: 60px; */
+    font-size: 11px;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+#BuildingIntro #OrganizationInfo #OrganizationList .organizationCard .organizationCardNum .roomNumberMultiㄴ{
+    /* line-height: 60px; */
+    font-size: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 @media screen and (max-width: 1199px) { 
     #BuildingIntro{
-        width: 768px;
-        height: 768px;
+        width: 100vw;
+        height: calc(100vw + 180px);
+        max-width: 768px;
+        max-height: 948px;
         margin: auto;
         position: relative;
         overflow: hidden;
     }
+
+    #BuildingIntro .IntroHeaderBig{
+        width: 100%;
+        height: 300px;
+        overflow: hidden;
+        position: relative;
+        border-radius: 5px 5px 0px 0px;
+    }
+
+    #BuildingIntro .IntroHeaderBig #IntroBG{
+        width: 100%;
+        height: 300px;
+        overflow: hidden;
+        position: absolute;
+        z-index: 0;
+    }
+    #BuildingIntro .IntroHeaderBig #IntroBG img{
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        
+    }
+
+    #BuildingIntro .IntroHeaderBig #IntroText{
+        width: 100%;
+        height: 300px;
+        overflow: hidden;
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        z-index: 1;
+        color: white;
+        background: linear-gradient(
+            to bottom,
+            rgba(20, 20, 20, 0) 10%,
+            rgba(20, 20, 20, 0.25) 25%,
+            rgba(20, 20, 20, 0.5) 50%,
+            rgba(20, 20, 20, 0.75) 75%,
+            rgba(20, 20, 20, 1) 100%
+        );
+        background-size: cover;
+    }
+
+    #BuildingIntro .IntroHeaderBig #IntroText h2{
+        margin: 10px 30px;
+        padding: 0;
+        font-size: 50px;
+    }
+
+    #BuildingIntro .IntroHeaderBig #IntroText p{
+        margin: 10px 30px;
+        padding: 0;
+        text-overflow: ellipsis;
+        /* white-space: nowrap; */
+    }
+
+    #BuildingIntro .IntroHeaderBig #IntroControl{
+        width: 100%;
+        height: 300px;
+        overflow: hidden;
+        position: absolute;
+        /* color: black;
+        background-color: white; */
+        z-index: 2;
+    }
+    #BuildingIntro .IntroHeaderBig #IntroControl #controlZone{
+        margin: 10px 30px;
+        padding: 0;
+        display: flex;
+        justify-content: flex-end;
+    }
+    #BuildingIntro .IntroHeaderBig #IntroControl #controlZone #MoveMap{
+        width: 30px;
+        height: 30px;
+        background-color: white;
+        border-radius: 50px;
+        line-height: 30px;
+        display: flex;
+    }
+    #BuildingIntro .IntroHeaderBig #IntroControl #controlZone #MoveMap:hover{
+        fill: white; 
+        background-color: rgb(0, 26, 113);
+    }
+
+    /* 축소시 */
+    #BuildingIntro .IntroHeaderSmall{
+        width: 100%;
+        height: 150px;
+        overflow: hidden;
+        position: relative;
+        border-radius: 5px 5px 0px 0px;
+    }
+
+    #BuildingIntro .IntroHeaderSmall #IntroBG{
+        width: 100%;
+        height: 150px;
+        overflow: hidden;
+        position: absolute;
+        z-index: 0;
+    }
+    #BuildingIntro .IntroHeaderSmall #IntroBG img{
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        
+    }
+
+    #BuildingIntro .IntroHeaderSmall #IntroText{
+        width: 100%;
+        height: 150px;
+        overflow: hidden;
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        z-index: 1;
+        color: white;
+        background: linear-gradient(
+            to bottom,
+            rgba(20, 20, 20, 0) 10%,
+            rgba(20, 20, 20, 0.25) 25%,
+            rgba(20, 20, 20, 0.5) 50%,
+            rgba(20, 20, 20, 0.75) 75%,
+            rgba(20, 20, 20, 1) 100%
+        );
+        background-size: cover;
+    }
+
+    #BuildingIntro .IntroHeaderSmall #IntroText h2{
+        margin: 10px 30px;
+        padding: 0;
+        font-size: 50px;
+        color: white;
+    }
+
+    #BuildingIntro .IntroHeaderSmall #IntroText p{
+        margin: 10px 30px;
+        padding: 0;
+        display: none;
+        color: white;
+        /* overflow: hidden;
+        text-overflow: ellipsis; */
+
+    }
+
+    #BuildingIntro .IntroHeaderSmall #IntroControl{
+        width: 100%;
+        height: 150px;
+        overflow: hidden;
+        position: absolute;
+        /* color: black;
+        background-color: white; */
+        z-index: 2;
+    }
+    #BuildingIntro .IntroHeaderSmall #IntroControl #controlZone{
+        margin: 10px 30px;
+        padding: 0;
+        display: flex;
+        justify-content: flex-end;
+    }
+    #BuildingIntro .IntroHeaderSmall #IntroControl #controlZone #MoveMap{
+        width: 30px;
+        height: 30px;
+        background-color: white;
+        border-radius: 50px;
+        line-height: 30px;
+    }
+    #BuildingIntro .IntroHeaderSmall #IntroControl #controlZone #MoveMap:hover{
+        fill: white; 
+        background-color: rgb(0, 26, 113);
+    }
+    #IntroBody{
+        width: 100%;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        overflow-y: scroll;
+    }
+
+    #BuildingIntro #MoreInfo{
+        margin: 10px 30px;
+        padding: 0;
+    }
+
+    #BuildingIntro #MoreInfo li{
+        padding: 5px 0px;
+    }
+
+
+    #BuildingIntro #OrganizationInfo{
+        margin: 0px 10px 10px 30px;
+        padding: 0;
+    }
+
+    #BuildingIntro .minititle{
+        font-family: 'Pretendard-Bold';
+        display: flex;
+        color: rgb(0, 26, 113);
+    }
+    #BuildingIntro .titleHeader{
+        width: 10px;
+        height: 25px;
+        background-color: rgb(0, 26, 113);
+        display: flex;
+        margin-right: 10px;
+    }
+
+    #BuildingIntro #OrganizationInfo #OrganizationList{
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+
+
+    #BuildingIntro #OrganizationInfo #OrganizationList .organizationCard{
+        width: 336px;
+        margin-bottom: 36px;
+        height: 168px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 10px 35px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.1);
+        /* overflow: hidden; */
+        position: relative;
+    }
+
+    #BuildingIntro #OrganizationInfo #OrganizationList .organizationCard:nth-child(odd){
+        margin-right: 18px;
+    }
+
+    #BuildingIntro #OrganizationInfo #OrganizationList .organizationCard:nth-child(even){
+        margin-left: 18px;
+    }
+
+    #BuildingIntro #OrganizationInfo #OrganizationList .organizationCard .organizationCardFront{
+        display: flex;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        z-index: 0;
+    }
+    #BuildingIntro #OrganizationInfo #OrganizationList .organizationCard .organizationCardFront img{
+        display: flex;
+        height: 100px;
+        width: 100px;
+        padding: 34px;
+        object-fit: scale-down;
+    }
+    #BuildingIntro #OrganizationInfo #OrganizationList .organizationCard .organizationCardFront .organizationName{
+        display: flex;
+        height: 168px;
+        width: 168px;
+        font-family: 'Pretendard-Bold';
+        color: rgb(0, 26, 113);
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        margin: 0px;
+    }
+    
+    #BuildingIntro #OrganizationInfo #OrganizationList .organizationCard .organizationCardBack{
+        width: 100%;
+        height: 168px;
+        position: absolute;
+        z-index: 1;
+        background-color: rgba(255, 255, 255, .9);
+        animation-name: organizationCard;
+        animation-duration: 0.3s;
+    }
+
+
+  
+}
+
+@media screen and (max-width: 767px) { 
+    #BuildingIntro #OrganizationInfo #OrganizationList{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+
+    #BuildingIntro #OrganizationInfo #OrganizationList .organizationCard:nth-child(odd){
+        margin-right: 0px;
+    }
+
+    #BuildingIntro #OrganizationInfo #OrganizationList .organizationCard:nth-child(even){
+        margin-left: 0px;
+    }
+    #ZoomController{
+    display: none;
+    }
+
 }

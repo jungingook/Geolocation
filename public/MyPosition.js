@@ -26,7 +26,11 @@ var MyPosition = function (_React$Component) {
         top: myLat + '%'
       };
 
-      return React.createElement('div', { style: Position, id: 'MyPosition' });
+      return React.createElement(
+        'div',
+        { id: 'MyPositionLayer', style: { 'transform': 'scale(' + this.props.mapZoom + ')' } },
+        React.createElement('div', { style: Position, id: 'MyPosition' })
+      );
     }
   }]);
 

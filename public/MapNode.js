@@ -130,24 +130,30 @@ var PlaceNoti = function (_React$Component2) {
             var left = (node[this.props.node].lot - this.props.MapContainer.start.lot) / this.props.MapContainer.map.lot * -1 * 100;
             return React.createElement(
                 'div',
-                { id: 'PlaceNoti', style: { top: top + '%', left: left + '%' } },
-                React.createElement('img', { src: node[this.props.node].img }),
+                { id: 'PlaceNotiLayer', style: { 'transform': 'scale(' + this.props.mapZoom + ')' } },
                 React.createElement(
                     'div',
-                    { id: 'PlaceNotiInfo' },
+                    { id: 'PlaceNoti', style: { top: top + '%', left: left + '%', 'transform': 'scale(' + 1 / this.props.mapZoom + ')' }, onClick: function onClick(e) {
+                            return e.stopPropagation();
+                        } },
+                    React.createElement('img', { src: node[this.props.node].img }),
                     React.createElement(
-                        'h3',
-                        null,
+                        'div',
+                        { id: 'PlaceNotiInfo' },
                         React.createElement(
-                            'span',
+                            'h3',
                             null,
-                            node[this.props.node].alias
+                            React.createElement(
+                                'span',
+                                null,
+                                node[this.props.node].alias
+                            )
+                        ),
+                        React.createElement(
+                            'p',
+                            null,
+                            linkNode
                         )
-                    ),
-                    React.createElement(
-                        'p',
-                        null,
-                        linkNode
                     )
                 )
             );

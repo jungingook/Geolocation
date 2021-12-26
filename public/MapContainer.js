@@ -18,6 +18,32 @@ var MapContainer = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (MapContainer.__proto__ || Object.getPrototypeOf(MapContainer)).call(this, props));
 
+    _this.useGps = function () {
+
+      navigator.geolocation.getCurrentPosition(function (position) {
+        var _this$setState;
+
+        var _position$coords = position.coords,
+            accuracy = _position$coords.accuracy,
+            latitude = _position$coords.latitude,
+            longitude = _position$coords.longitude,
+            altitude = _position$coords.altitude,
+            altitudeAccuracy = _position$coords.altitudeAccuracy,
+            heading = _position$coords.heading;
+
+        var nearNode = _this.nearNode(latitude, longitude);
+        _this.setState((_this$setState = {
+          lat: latitude,
+          lot: longitude,
+          acc: accuracy,
+          heading: heading,
+          alt: altitude,
+          altAcc: altitudeAccuracy
+        }, _defineProperty(_this$setState, 'lot', longitude), _defineProperty(_this$setState, 'nearNode', nearNode), _this$setState));
+        // Show a map centered at latitude / longitude.
+      }, function (error) {}, { enableHighAccuracy: false });
+    };
+
     _this.mapChange = function (value) {
       _this.setState({
         mapStyle: value
@@ -53,8 +79,9 @@ var MapContainer = function (_React$Component) {
     _this.nodeChange = function () {
       var num = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
-
+      console.log(num);
       if (num) {
+        console.log(num);
         _this.setState({
           selectNode: num
         });
@@ -77,24 +104,27 @@ var MapContainer = function (_React$Component) {
     };
 
     _this.onTouchStart = function (e) {
-
-      //console.log('onTouchStart',e.touches[0].pageX,e.touches[0].pageY,this.state.mapPositionX,this.state.mapPositionY)
+      // 터치 드레그
       if (e.touches.length == 1) {
         _this.setState({
-          mapTouchStart: e.touches[0]
+          mapTouchStart: e.touches[0],
+          touchMode: 'TouchDrag'
         });
-        //e.preventDefault()
+      } else if (e.touches.length <= 2) {
+        _this.setState({
+          ZoomStart: [e.touches[0], e.touches[1]],
+          touchMode: 'Pinches'
+        });
       }
-      // alert('테스트')
     };
 
     _this.onTouch = function (e) {
+      // console.log(e.touches,'onTouch2',this.state.touchMode)
+      // 터치 드레그
 
-      // console.log('onTouch',e.touches[0].pageX - this.state.mapDragStart.pageX,e.touches[0].pageY - this.state.mapDragStart.pageY)
-      // console.log('onTouch',e.touches[0].pageX,e.touches[0].pageY)
       if (e.touches.length == 1) {
         try {
-          if (e.pageX != 0 && e.pageY != 0) {
+          if (e.pageX != 0 && e.pageY != 0 && _this.state.touchMode == 'TouchDrag') {
             var moveX = e.touches[0].pageX - _this.state.mapTouchStart.pageX;
             var moveY = e.touches[0].pageY - _this.state.mapTouchStart.pageY;
             if (_this.state.tempPositionX != moveX || _this.state.tempPositionY != moveY) {
@@ -106,21 +136,46 @@ var MapContainer = function (_React$Component) {
           }
         } catch (error) {}
       }
+      // 핀치 투 줌
+      else if (e.touches.length <= 2 && _this.state.touchMode == 'Pinches') {
+
+          try {
+
+            var startPointX = Math.abs(_this.state.ZoomStart[0].pageX - _this.state.ZoomStart[1].pageX);
+            var startPointY = Math.abs(_this.state.ZoomStart[0].pageY - _this.state.ZoomStart[1].pageY);
+
+            var nowPointX = Math.abs(e.touches[0].pageX - e.touches[1].pageX);
+            var nowPointY = Math.abs(e.touches[0].pageY - e.touches[1].pageY);
+
+            var startSqrt = Math.sqrt(startPointX * startPointX + startPointY * startPointY);
+
+            var notSqrt = Math.sqrt(nowPointX * nowPointX + nowPointY * nowPointY);
+
+            _this.setState({
+              testText: '터치배율' + notSqrt / startSqrt + '줌' + _this.state.mapZoom,
+              tempZoom: notSqrt / startSqrt
+            });
+          } catch (error) {}
+        }
     };
 
     _this.onTouchEnd = function (e) {
-      //e.preventDefault()
-      //console.log('onTouchEnd',e.touches)
-      // console.log(this.state.mapPositionX+this.state.tempPositionX,this.state.mapPositionY+this.state.tempPositionY)
-      try {
-        _this.setState({
-          tempPositionY: 0,
-          tempPositionX: 0,
-          mapPositionX: _this.positionControl(_this.state.mapPositionX, _this.state.tempPositionX),
-          mapPositionY: _this.positionControl(_this.state.mapPositionY, _this.state.tempPositionY)
+      // 터치 드레그
+      if (_this.state.touchMode == 'TouchDrag') {
+        try {
+          _this.setState({
+            tempPositionY: 0,
+            tempPositionX: 0,
+            mapPositionX: _this.positionControl(_this.state.mapPositionX, _this.state.tempPositionX),
+            mapPositionY: _this.positionControl(_this.state.mapPositionY, _this.state.tempPositionY)
 
-        });
-      } catch (error) {}
+          });
+        } catch (error) {}
+      }
+      // 핀치 투 줌
+      else if (_this.state.touchMode == 'Pinches') {
+          _this.zoomControl(_this.state.mapZoom * _this.state.tempZoom);
+        }
     };
 
     _this.mapDrag = function (e) {
@@ -163,15 +218,22 @@ var MapContainer = function (_React$Component) {
     _this.zoomControl = function (zoom) {
       var option = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
-
-      if (zoom >= 3) {
-        zoom = 3;
-      } else if (zoom <= 1.75) {
-        zoom = 1.75;
+      if (zoom >= 5) {
+        zoom = 5;
+      } else if (zoom <= 1) {
+        zoom = 1;
       }
-      _this.setState({
-        mapZoom: zoom
-      });
+      if (option == null) {
+        _this.setState({
+          mapZoom: zoom,
+          tempZoom: 1,
+          testText: '줌 : ' + zoom
+
+        });
+      } else if (option == 'return') {
+
+        return zoom;
+      }
     };
 
     _this.positionControl = function (mapPosition, tempPosition) {
@@ -195,9 +257,10 @@ var MapContainer = function (_React$Component) {
           return React.createElement(
             'div',
             { id: 'MapMain',
-              tabIndex: 0, draggable: 'true',
-              ref: _this.container,
-              onDragOver: function onDragOver(e) {
+              tabIndex: 0, draggable: 'true'
+
+              // onClick={(e)=>this.state}
+              , onDragOver: function onDragOver(e) {
                 return _this.mapDrag(e);
               },
               onDragStart: function onDragStart(e) {
@@ -221,7 +284,7 @@ var MapContainer = function (_React$Component) {
               MapContainer: _this.props.MapContainer,
               top: _this.positionControl(_this.state.mapPositionY, _this.state.tempPositionY) //773
               , left: _this.positionControl(_this.state.mapPositionX, _this.state.tempPositionX) //773
-              , mapZoom: _this.state.mapZoom,
+              , mapZoom: _this.zoomControl(_this.state.mapZoom * _this.state.tempZoom, 'return'),
               userLat: userLat,
               userLot: userLot,
               container: _this.container.current,
@@ -232,11 +295,14 @@ var MapContainer = function (_React$Component) {
               selectNode: _this.state.selectNode,
               introBuilding: _this.state.introBuilding,
               introBuildingChange: _this.introBuildingChange,
-              navigationMode: _this.state.navigationMode }),
+              navigationMode: _this.state.navigationMode,
+              useGps: _this.useGps
+            }),
             React.createElement(MapController, {
               mapZoom: _this.state.mapZoom,
               zoomControl: _this.zoomControl,
-              tempMmode: _this.containerModeChange
+              tempMmode: _this.containerModeChange,
+              testText: _this.state.testText
             })
           );
         case 'building':
@@ -277,6 +343,8 @@ var MapContainer = function (_React$Component) {
       mapTouchStart: null,
       mapPositionX: 54,
       mapPositionY: -33,
+      touchMode: null,
+      ZoomStart: [0, 0],
       tempPositionX: 0,
       tempPositionY: 0,
       mapStyle: 'normal',
@@ -284,57 +352,25 @@ var MapContainer = function (_React$Component) {
       nearNode: null,
       targetNode: null,
       navigationMode: null,
+      useGps: '',
       mapZoom: 2,
-      containerMode: 'map'
+      tempZoom: 1,
+      containerMode: 'map',
+      testText: '테스트3'
     };
     return _this;
   }
 
+  //////////////////////////////////////////
+  // containerMode ('map' or 'building')
+  // 맵 컨테이너의 메인부분에 표시할 정보를 선택합니다.
+  // map : 지도를 표시합니다, building : 빌딩내 정보를 표현합니다
+  //////////////////////////////////////////
+
+
   _createClass(MapContainer, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      this.container.current.addEventListener('touchstart', this.preventDefault);
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      this.container.current.addEventListener('touchstart', this.preventDefault);
-    }
-
-    //////////////////////////////////////////
-    // containerMode ('map' or 'building')
-    // 맵 컨테이너의 메인부분에 표시할 정보를 선택합니다.
-    // map : 지도를 표시합니다, building : 빌딩내 정보를 표현합니다
-    //////////////////////////////////////////
-
-  }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
-
-      navigator.geolocation.getCurrentPosition(function (position) {
-        var _this2$setState;
-
-        var _position$coords = position.coords,
-            accuracy = _position$coords.accuracy,
-            latitude = _position$coords.latitude,
-            longitude = _position$coords.longitude,
-            altitude = _position$coords.altitude,
-            altitudeAccuracy = _position$coords.altitudeAccuracy,
-            heading = _position$coords.heading;
-
-        var nearNode = _this2.nearNode(latitude, longitude);
-
-        _this2.setState((_this2$setState = {
-          lat: latitude,
-          lot: longitude,
-          acc: accuracy,
-          heading: heading,
-          alt: altitude,
-          altAcc: altitudeAccuracy
-        }, _defineProperty(_this2$setState, 'lot', longitude), _defineProperty(_this2$setState, 'nearNode', nearNode), _this2$setState));
-        // Show a map centered at latitude / longitude.
-      }, function (error) {}, { enableHighAccuracy: true });
 
       var userLat = (this.state.lat - this.props.MapContainer.start.lat) / this.props.MapContainer.map.lat * -1;
       var userLot = (this.state.lot - this.props.MapContainer.start.lot) / this.props.MapContainer.map.lot * -1;
@@ -344,7 +380,7 @@ var MapContainer = function (_React$Component) {
         this.containerMode(this.state.containerMode),
         React.createElement(
           'div',
-          { id: 'MapSide' },
+          { id: 'MapSide', className: this.state.containerMode == 'building' ? 'MapNavigationHide' : '' },
           React.createElement(MapNavigation, {
             state: this.state,
             userLat: userLat,
@@ -388,56 +424,61 @@ var end = { lat: 37.605490, lot: 126.937830
 var MapController = function (_React$Component2) {
   _inherits(MapController, _React$Component2);
 
-  function MapController() {
-    var _ref;
-
-    var _temp, _this3, _ret;
-
+  function MapController(props) {
     _classCallCheck(this, MapController);
 
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
+    var _this2 = _possibleConstructorReturn(this, (MapController.__proto__ || Object.getPrototypeOf(MapController)).call(this, props));
 
-    return _ret = (_temp = (_this3 = _possibleConstructorReturn(this, (_ref = MapController.__proto__ || Object.getPrototypeOf(MapController)).call.apply(_ref, [this].concat(args))), _this3), _this3.zoomButton = function (option) {
+    _this2.zoomButton = function (option) {
       var zoom = 1;
       switch (option) {
         case 'plus':
-          zoom = _this3.props.mapZoom + 0.25;
+          zoom = _this2.props.mapZoom + 0.25;
           break;
         case 'minus':
-          zoom = _this3.props.mapZoom - 0.25;
+          zoom = _this2.props.mapZoom - 0.25;
           break;
         default:
           zoom = 1;
           break;
       }
-      _this3.props.zoomControl(parseFloat(zoom.toFixed(1)));
-    }, _temp), _possibleConstructorReturn(_this3, _ret);
+      _this2.props.zoomControl(parseFloat(zoom.toFixed(1)));
+    };
+
+    _this2.container = React.createRef();
+    _this2.preventDefault = function (e) {
+      e.preventDefault();
+    };
+    _this2.state = {};
+    return _this2;
   }
 
   _createClass(MapController, [{
     key: 'render',
     value: function render() {
-      var _this4 = this;
+      var _this3 = this;
 
       return React.createElement(
         'div',
-        { id: 'MapController' },
+        { id: 'MapController', ref: this.container },
         React.createElement(
           'div',
           { id: 'ZoomController' },
           React.createElement(
             'button',
             { onClick: function onClick() {
-                return _this4.zoomButton('plus');
+                return _this3.zoomButton('plus');
+              }, onTouch: function onTouch() {
+                return _this3.zoomButton('plus');
               } },
             '+'
           ),
           React.createElement(
             'button',
             { onClick: function onClick() {
-                return _this4.zoomButton('minus');
+                return _this3.zoomButton('minus');
+              }, onTouch: function onTouch() {
+                return _this3.zoomButton('minus');
               } },
             '-'
           )

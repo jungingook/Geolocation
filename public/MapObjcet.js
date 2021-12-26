@@ -15,6 +15,7 @@ var MapObjcet = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (MapObjcet.__proto__ || Object.getPrototypeOf(MapObjcet)).call(this, props));
 
     _this.dijkstra = function (start, end) {
+
       nextNode = function nextNode(startNode, targetNode) {
         // console.log('경로 : ',node[startNode].alias,'-->',node[targetNode.vertex].alias,'갱신여부 : ',distance[targetNode.vertex]>targetNode.dist+distance[startNode])
         if (distance[targetNode.vertex] > targetNode.dist + distance[startNode]) {
@@ -70,11 +71,6 @@ var MapObjcet = function (_React$Component) {
         });
       }
 
-      // for (let index = 0; index < prev.length; index++) {
-      //   console.log(index,'번 노드',distance[index],prev[index])
-
-      // }
-
       // 경로찾기
       route.push(end);
       findRoute(end);
@@ -95,11 +91,12 @@ var MapObjcet = function (_React$Component) {
     _this.mapObjs = function (inpark) {
       var objs = [React.createElement(MapBackground, { style: _this.props.mapStyle, mapZoom: _this.props.mapZoom })];
       objs.push(React.createElement(MapNode, { lot: _this.props.userLot, lat: _this.props.userLat, MapContainer: _this.props.MapContainer, nodeChange: _this.props.nodeChange, route: _this.state.route, navigationMode: _this.props.navigationMode, mapZoom: _this.props.mapZoom }));
+      objs.push(React.createElement(MapBuildingObject, { style: _this.props.mapStyle, mapZoom: _this.props.mapZoom, nodeChange: _this.props.nodeChange, selectNode: _this.props.selectNode }));
       if (_this.props.selectNode != null) {
-        objs.push(React.createElement(PlaceNoti, { navigationStart: _this.navigationStart, navigationEnd: _this.navigationEnd, node: _this.props.selectNode, lot: _this.props.userLot, lat: _this.props.userLat, MapContainer: _this.props.MapContainer }));
+        // objs.push(<PlaceNoti navigationStart={this.navigationStart} navigationEnd={this.navigationEnd} node={this.props.selectNode} lot={this.props.userLot} lat={this.props.userLat} MapContainer={this.props.MapContainer} mapZoom={this.props.mapZoom}/>)
       }
       if (inpark) {
-        objs.push(React.createElement(MyPosition, { lot: _this.props.userLot, lat: _this.props.userLat }));
+        objs.push(React.createElement(MyPosition, { lot: _this.props.userLot, lat: _this.props.userLat, mapZoom: _this.props.mapZoom }));
       }
       return objs;
     };
@@ -140,13 +137,13 @@ var MapObjcet = function (_React$Component) {
     _this.polling = function () {
       if (_this.props.navigationMode == "myLocation") {
         _this.navigationRoute();
-        console.log('테스트중', _this.props.navigationMode);
       }
-      // this.setState({
-      //     polling : this.state.polling +1
-      // })
     };
 
+    _this.container = React.createRef();
+    _this.preventDefault = function (e) {
+      e.preventDefault();
+    };
     _this.state = {
       // inPark : false,
       start: 1,
@@ -164,7 +161,7 @@ var MapObjcet = function (_React$Component) {
       if (this.props.navigationMode != prevProps.navigationMode) {
         this.navigationRoute();
         if (this.props.navigationMode == 'myLocation') {
-          var polling = setInterval(this.polling, 1000);
+          var polling = setInterval(this.polling, 2000);
           this.setState({
             pollingInterval: polling
           });
@@ -177,6 +174,9 @@ var MapObjcet = function (_React$Component) {
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
+      // console.log(this.container.current)
+      // console.log('componentDidMount')
+      this.container.current.addEventListener('touchstart', this.preventDefault);
       if (this.props.parents != 'view') {
         // AJAX 통신 마운트
         // 내부 카운터 마운트
@@ -186,6 +186,7 @@ var MapObjcet = function (_React$Component) {
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
+      this.container.current.removeEventListener('touchstart', this.preventDefault);
       // clearInterval(this.state.pollingInterval);
       if (this.props.parents != 'view') {
         // 내부 카운터 언마운트
@@ -200,10 +201,17 @@ var MapObjcet = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
+      if (this.props.navigationMode == "myLocation") {
+        this.props.useGps();
+      }
       var inpark = this.inPark();
       return React.createElement(
         'div',
-        { id: 'MapObjcet', style: { 'top': this.props.top, 'left': this.props.left } },
+        { id: 'MapObjcet', style: { 'top': this.props.top, 'left': this.props.left }, ref: this.container, onClick: function onClick() {
+            return _this2.props.nodeChange(null);
+          } },
         this.mapObjs(inpark)
       );
     }

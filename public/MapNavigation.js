@@ -39,47 +39,11 @@ var MapNavigation = function (_React$Component) {
             null,
             React.createElement(
               'div',
-              { className: 'search' },
-              React.createElement(
-                'label',
-                { 'for': 'fname' },
-                React.createElement(
-                  'p',
-                  null,
-                  '\uAC80\uC0C9'
-                ),
-                React.createElement('input', { placeholder: '\uC7A5\uC18C\uB97C \uAC80\uC0C9\uD558\uC138\uC694', value: _this.state.search, onChange: function onChange(e) {
-                    return _this.setState({ search: e.target.value });
-                  } })
-              )
-            ),
-            React.createElement(
-              'div',
               { id: 'navScroll' },
               React.createElement(
                 'div',
                 { id: 'mapPointList' },
                 point
-              ),
-              React.createElement(
-                'div',
-                { className: 'mapPoint', onClick: function onClick() {
-                    return _this.setState({ nav: 'test' });
-                  } },
-                React.createElement(
-                  'div',
-                  { className: 'pointInfo' },
-                  React.createElement(
-                    'h3',
-                    null,
-                    '\uD14C\uC2A4\uD2B8\uBAA8\uB4DC1'
-                  ),
-                  React.createElement(
-                    'p',
-                    null,
-                    '\uD14C\uC2A4\uD2B8 \uBAA8\uB4DC\uB85C \uC9C4\uC785\uD569\uB2C8\uB2E4.'
-                  )
-                )
               )
             )
           );
@@ -162,50 +126,22 @@ var PlaceCard = function (_React$Component2) {
     _this2.content = function () {
 
       switch (_this2.state.mode) {
-        case 'test':
-          return React.createElement(
-            'div',
-            { div: true, className: 'mapPoint mapTransition', onClick: function onClick() {
-                return _this2.props.nodeChange(_this2.props.node.num);
-              } },
-            React.createElement('img', { src: _this2.props.node.img }),
-            React.createElement(
-              'div',
-              { className: 'poin\u3134tInfo' },
-              React.createElement(
-                'div',
-                { className: 'pointheader' },
-                React.createElement(
-                  'h3',
-                  null,
-                  _this2.props.node.alias
-                ),
-                React.createElement(
-                  'span',
-                  null,
-                  React.createElement(
-                    'button',
-                    { onClick: function onClick() {
-                        return _this2.setState({ mode: 'nav' });
-                      } },
-                    '\uAE38\uCC3E\uAE30'
-                  ),
-                  React.createElement(
-                    'button',
-                    { onClick: function onClick() {
-                        return _this2.setState({ mode: 'more' });
-                      } },
-                    '\uB354\uBCF4\uAE30'
-                  )
-                )
-              ),
-              React.createElement(
-                'p',
-                null,
-                _this2.props.node.summary
-              )
-            )
-          );
+        // case 'test':
+        //   return(
+        //   <div div className="mapPoint mapTransition" onClick={()=>this.props.nodeChange(this.props.node.num)}>
+        //     <img src={this.props.node.img}/>
+        //     <div className="pointInfo">
+        //       <div className="pointheader">
+        //         <h3>{this.props.node.alias}</h3>
+        //         <span>
+        //           <button onClick={()=>this.setState({mode:'nav'})}>길찾기</button>
+        //           <button onClick={()=>this.setState({mode:'more'})}>더보기</button>
+        //         </span>
+        //       </div>
+        //       <p>{this.props.node.summary}</p>
+        //   </div>
+        //   </div>
+        //   )
         case 'info':
           return React.createElement(
             'div',
@@ -231,7 +167,7 @@ var PlaceCard = function (_React$Component2) {
               { className: 'PlaceButton' },
               React.createElement(
                 'button',
-                { className: 'router', onClick: function onClick(e) {
+                { className: 'more', onClick: function onClick(e) {
                     return _this2.more(e);
                   } },
                 React.createElement(
@@ -242,7 +178,7 @@ var PlaceCard = function (_React$Component2) {
               ),
               React.createElement(
                 'button',
-                { className: 'more', onClick: function onClick(e) {
+                { className: 'router', onClick: function onClick(e) {
                     return _this2.route(e);
                   } },
                 React.createElement(
@@ -333,7 +269,7 @@ var PlaceCard = function (_React$Component2) {
               { className: 'PlaceButton' },
               React.createElement(
                 'button',
-                { className: 'router', onClick: function onClick(e) {
+                { className: 'more', onClick: function onClick(e) {
                     return _this2.more(e);
                   } },
                 React.createElement(
@@ -344,7 +280,7 @@ var PlaceCard = function (_React$Component2) {
               ),
               React.createElement(
                 'button',
-                { className: 'more', onClick: function onClick(e) {
+                { className: 'router', onClick: function onClick(e) {
                     return _this2.back(e);
                   } },
                 React.createElement(

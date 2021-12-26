@@ -11,7 +11,10 @@ class MyPosition extends React.Component {
     };
 
     return (
-      <div style={Position} id="MyPosition"/>
+      <div id="MyPositionLayer" style={{'transform': 'scale('+this.props.mapZoom+')'}}>
+       <div style={Position} id="MyPosition"/>
+      </div>
+
     )
   }
 }
